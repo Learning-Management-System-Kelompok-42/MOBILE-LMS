@@ -25,7 +25,13 @@ class _DetailCourseState extends State<DetailCourse> {
           children: [
             const SizedBox(height: 10),
             ListTile(
-              leading: Text(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'dashboard_active_screen');
+                },
+                icon: Icon(Icons.arrow_back),
+              ),
+              title: Text(
                 'Detail Course',
                 style: TextStyle(fontSize: 20),
               ),
