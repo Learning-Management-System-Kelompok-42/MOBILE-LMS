@@ -5,7 +5,8 @@ import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/course_screen_active.dart';
 import 'package:lms/screen/course_screen_past.dart';
 import 'package:lms/screen/dashboard_screen_management.dart';
-import 'package:lms/screen/edit_akun_screen.dart';
+import 'package:lms/screen/edit_profile_screen.dart';
+import 'package:lms/screen/ganti_password_akun_screen.dart';
 import 'package:lms/screen/landing_screen.dart';
 import 'package:lms/screen/login_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
@@ -27,7 +28,8 @@ void main() {
       'course_screen': (context) => CourseScreen(),
       'profile_screen': (context) => ProfileScreen(),
       'akun_screen': (context) => AkunScreen(),
-      'edit_akun_screen': (context) => EditAkunScreen(),
+      'ganti_password_screen': (context) => GantiPasswordScreen(),
+      'edit_profile_screen': (context) => EditProfileScreen(),
     },
   ));
 }
