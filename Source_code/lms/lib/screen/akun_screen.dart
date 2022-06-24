@@ -10,97 +10,160 @@ class AkunScreen extends StatefulWidget {
 
 class _AkunScreenState extends State<AkunScreen> {
   var name = 'Budi';
-  var img = 'assets/images/landing.png';
+  var img = 'assets/images/contoh.png';
   var email = 'budi@company.id';
   var role = 'UI/UX Designer';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            CircleAvatar(
-              backgroundImage: AssetImage(img),
-              radius: 80,
+        body: Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          ListTile(
+            leading: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.arrow_back),
             ),
-            const SizedBox(height: 50),
-            Text(
-              name,
-              style: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+            title: const Text(
+              'Akun Saya',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
-            Text(
-              email,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.blue,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              role,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 20),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, 'edit_akun_screen');
-              },
-              child: ListTile(
-                leading: Text(
-                  'Edit Data Pribadi',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox.fromSize(
+                  size: Size.fromRadius(40),
+                  child: Image.asset(img, fit: BoxFit.cover),
                 ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                ),
-                tileColor: Color.fromARGB(255, 0, 92, 74),
-                shape: RoundedRectangleBorder(
+              ),
+              const SizedBox(width: 10),
+              Column(
+                children: [
+                  Container(
+                    width: 120,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        name,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 0, 92, 74)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 120,
+                    child: Text(
+                      role,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 120,
+                    child: Text(
+                      email,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, 'edit_profile_screen');
+            },
+            child: Container(
+              height: 55,
+              width: 300,
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.black)),
+              child: ListTile(
+                leading: const Text(
+                  'Edit Profile',
+                  style: TextStyle(color: Colors.black, fontSize: 15),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.black,
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            InkWell(
-              onTap: () {},
+          ),
+          const SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, 'ganti_password_screen');
+            },
+            child: Container(
+              height: 55,
+              width: 300,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.black)),
               child: ListTile(
-                leading: Text(
+                leading: const Text(
+                  'Ganti Password',
+                  style: TextStyle(color: Colors.black, fontSize: 15),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '');
+            },
+            child: Container(
+              height: 55,
+              width: 300,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.black)),
+              child: ListTile(
+                leading: const Text(
                   'Sertifikat',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  style: TextStyle(color: Colors.black, fontSize: 15),
                 ),
-                trailing: Icon(
+                trailing: const Icon(
                   Icons.arrow_forward_ios,
-                  color: Colors.white,
-                ),
-                tileColor: Color.fromARGB(255, 0, 92, 74),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black,
                 ),
               ),
             ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'login');
-              },
-              child: const Text('Keluar'),
-              style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 0, 92, 74),
-                  fixedSize: Size(120, 40)),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 139),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'login');
+            },
+            child: const Text('Keluar'),
+            style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 0, 92, 74),
+                fixedSize: Size(130, 40)),
+          ),
+        ],
       ),
     ));
   }
