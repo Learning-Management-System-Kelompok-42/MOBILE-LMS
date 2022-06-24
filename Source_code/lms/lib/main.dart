@@ -7,10 +7,12 @@ import 'package:lms/screen/course_screen_past.dart';
 import 'package:lms/screen/dashboard_screen_management.dart';
 import 'package:lms/screen/edit_profile_screen.dart';
 import 'package:lms/screen/ganti_password_akun_screen.dart';
+import 'package:lms/screen/kuis_screen.dart';
 import 'package:lms/screen/landing_screen.dart';
 import 'package:lms/screen/login_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
 import 'package:lms/screen/regis_screen.dart';
+import 'package:lms/screen/video_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -30,6 +32,8 @@ void main() {
       'akun_screen': (context) => AkunScreen(),
       'ganti_password_screen': (context) => GantiPasswordScreen(),
       'edit_profile_screen': (context) => EditProfileScreen(),
+      'video_screen': (context) => VideoScreen(),
+      'kuis_screen': (context) => KuisScreen(),
     },
   ));
 }
