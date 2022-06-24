@@ -11,7 +11,7 @@ class DetailCourse extends StatefulWidget {
 
 class _DetailCourseState extends State<DetailCourse> {
   TextEditingController _ratingController = TextEditingController();
-  var _userRating;
+  var _userRating = 4.2;
 
   var courseTitle = 'ini Judul course';
   var courseDesc = 'ini deskripsi course';
@@ -54,7 +54,7 @@ class _DetailCourseState extends State<DetailCourse> {
                 ),
                 Container(
                   width: double.infinity,
-                  height: 498,
+                  height: 600,
                   child: Column(
                     children: [
                       Container(
@@ -90,12 +90,17 @@ class _DetailCourseState extends State<DetailCourse> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 164,
+                        height: 200,
                         child: ListView.builder(
                           padding: EdgeInsets.all(1),
-                          itemCount: 2,
+                          itemCount: 3,
                           itemBuilder: (context, index) {
-                            return excerCard();
+                            return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, 'kuis_screen');
+                              },
+                              child: excerCard(),
+                            );
                           },
                         ),
                       ),
@@ -125,8 +130,7 @@ class _DetailCourseState extends State<DetailCourse> {
                       labelText: 'Enter rating',
                       suffixIcon: MaterialButton(
                         onPressed: () {
-                          _userRating =
-                              double.parse(_ratingController.text ?? '0.0');
+                          _userRating = double.parse(_ratingController.text);
                           setState(() {});
                         },
                         child: Text('Rate'),
