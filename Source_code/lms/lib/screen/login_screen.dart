@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart';
 import 'package:lms/api/login_api.dart';
+import 'package:lms/screen/dashboard_home_screen.dart';
 import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/service/auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,11 +20,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
+  TextEditingController emailPerusahaan = TextEditingController();
+  TextEditingController passwordUser = TextEditingController();
+  late SharedPreferences token;
+
+  String emaildummy = 'user1@tokopedia.com';
+  String passDummy = 'user123';
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailPerusahaan = TextEditingController();
-    TextEditingController passwordUser = TextEditingController();
-
     return Scaffold(
       body: Center(
         child: ListView(
@@ -45,8 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       // ================================================================================================ //
                       TextFormField(
                         controller: emailPerusahaan,
-                        decoration: const InputDecoration(
-                          labelText: 'Alamat Email',
+                        decoration: InputDecoration(
+                          labelText: emaildummy,
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 15, horizontal: 20),
                           enabledBorder: OutlineInputBorder(
@@ -77,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passwordUser,
                         obscureText: _isObscure,
                         decoration: InputDecoration(
-                          labelText: 'Kata Sandi',
+                          labelText: passDummy,
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 20),
                           enabledBorder: const OutlineInputBorder(
@@ -123,8 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         onPressed: () {
                           setState(() {
-                            login(emailPerusahaan.text, passwordUser.text);
+                            loginUser();
                           });
+
                           print('ini Email ${emailPerusahaan.text}');
                           print('Ini Password ${passwordUser.text}');
                         },
@@ -234,14 +241,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  login(String email, String password) async {
-    final dio = Dio();
-    final response = await dio.post(
-        'https://api-lms-42.herokuapp.com/v1/auth/login',
-        data: jsonEncode({'email': email, 'password': password}));
-    if (response.statusCode == 200) {
+  Future<void> loginUser() async {
+    dynamic res = await Auth.login(emaildummy, passDummy);
+
+    if (res['message'] == 'Success') {
+      String tokenUser = res['data']['token'];
       Navigator.pushNamed(context, 'dashboard');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
-    return response.data;
   }
 }

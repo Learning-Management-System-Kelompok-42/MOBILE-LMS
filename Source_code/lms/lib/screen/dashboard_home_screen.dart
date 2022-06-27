@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms/screen/course_screen_management.dart';
 
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
@@ -68,7 +69,12 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, 'dashboard_active_screen');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CourseScreen(),
+                          ),
+                        );
                       },
                       child: courseCard(),
                     );
