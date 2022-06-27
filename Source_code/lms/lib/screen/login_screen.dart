@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart';
 import 'package:lms/api/login_api.dart';
 import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/service/auth_service.dart';
@@ -118,7 +122,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, 'dashboard');
+                          setState(() {
+                            login(emailPerusahaan.text, passwordUser.text);
+                          });
+                          print('ini Email ${emailPerusahaan.text}');
+                          print('Ini Password ${passwordUser.text}');
                         },
                         child: const Text('Masuk'),
                       ),
@@ -224,5 +232,16 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  login(String email, String password) async {
+    final dio = Dio();
+    final response = await dio.post(
+        'https://api-lms-42.herokuapp.com/v1/auth/login',
+        data: jsonEncode({'email': email, 'password': password}));
+    if (response.statusCode == 200) {
+      Navigator.pushNamed(context, 'dashboard');
+    }
+    return response.data;
   }
 }

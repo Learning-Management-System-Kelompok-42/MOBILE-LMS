@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lms/model/profile_model.dart';
 import 'package:lms/screen/akun_screen.dart';
 import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/course_screen_active.dart';
