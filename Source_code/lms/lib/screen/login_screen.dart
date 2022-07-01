@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
   TextEditingController emailPerusahaan = TextEditingController();
   TextEditingController passwordUser = TextEditingController();
-  late SharedPreferences token;
+  String userToken = '';
 
-  String emaildummy = 'user1@tokopedia.com';
+  String emaildummy = 'user1@tokped.id';
   String passDummy = 'user123';
 
   @override
@@ -128,10 +129,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          setState(() {
-                            loginUser();
-                          });
-
+                          loginUser();
+                          getID();
                           print('ini Email ${emailPerusahaan.text}');
                           print('Ini Password ${passwordUser.text}');
                         },
@@ -241,12 +240,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> loginUser() async {
-    dynamic res = await Auth.login(emaildummy, passDummy);
+  loginUser() async {
+    dynamic logus = await Auth.login(emaildummy, passDummy);
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
 
-    if (res['message'] == 'Success') {
-      String tokenUser = res['data']['token'];
-      Navigator.pushNamed(context, 'dashboard');
+    if (logus['message'] == 'Success') {
+      setState(() {
+        sharedPref.setString('token', logus['data']['token']);
+        sharedPref.setString('userid', logus['data']['user_id']);
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -254,6 +256,19 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.red,
         ),
       );
+    }
+    print(sharedPref.get('token'));
+    print(sharedPref.get('userid'));
+  }
+
+  getID() async {
+    await loginUser();
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    dynamic getid =
+        await Auth().getUser(sharedPref.get('token'), sharedPref.get('userid'));
+    print("ini adalah data get ID = $getid =");
+    if (getid != null) {
+      Navigator.pushNamed(context, 'dashboard');
     }
   }
 }
