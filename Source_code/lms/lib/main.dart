@@ -12,27 +12,35 @@ import 'package:lms/screen/login_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
 import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/screen/video_screen.dart';
+import 'package:lms/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    initialRoute: 'landing',
-    routes: {
-      'landing': (context) => LandingScreen(),
-      'regis': (context) => const RegisScreen(),
-      'login': (context) => const LoginScreen(),
-      'dashboard': (context) => const DashboardScreen(),
-      'dashboard_active_screen': (context) =>
-          const DashBoardCourseActiveScreen(),
-      'dashboard_past_screen': (context) => const DashBoardCoursePastScreen(),
-      'course_screen': (context) => CourseScreen(),
-      'profile_screen': (context) => ProfileScreen(),
-      'akun_screen': (context) => AkunScreen(),
-      'ganti_password_screen': (context) => GantiPasswordScreen(),
-      'edit_profile_screen': (context) => EditProfileScreen(),
-      'video_screen': (context) => VideoScreen(),
-      'kuis_screen': (context) => KuisScreen(),
-    },
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => UserViewModel(),
+      )
+    ],
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'landing',
+      routes: {
+        'landing': (context) => LandingScreen(),
+        'regis': (context) => const RegisScreen(),
+        'login': (context) => const LoginScreen(),
+        'dashboard': (context) => const DashboardScreen(),
+        'dashboard_active_screen': (context) =>
+            const DashBoardCourseActiveScreen(),
+        'dashboard_past_screen': (context) => const DashBoardCoursePastScreen(),
+        'course_screen': (context) => CourseScreen(),
+        'profile_screen': (context) => ProfileScreen(),
+        'akun_screen': (context) => AkunScreen(),
+        'ganti_password_screen': (context) => GantiPasswordScreen(),
+        'edit_profile_screen': (context) => EditProfileScreen(),
+        'video_screen': (context) => VideoScreen(),
+        'kuis_screen': (context) => KuisScreen(),
+      },
+    ),
   ));
 }
