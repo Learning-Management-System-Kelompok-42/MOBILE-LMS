@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lms/model/user_model.dart';
 import 'package:lms/screen/course_screen_management.dart';
-
+import 'package:lms/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,6 +20,7 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<UserViewModel>(context, listen: false).getUserData();
     _searchController.addListener(() {
       setState(() {});
     });
@@ -30,6 +32,9 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final a = Provider.of<UserViewModel>(context);
+    late UserModel userModel;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 1),
       child: ListView(
