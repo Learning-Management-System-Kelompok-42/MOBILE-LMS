@@ -1,15 +1,6 @@
-import 'dart:convert';
-import 'dart:html';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart';
-import 'package:lms/api/login_api.dart';
-import 'package:lms/screen/dashboard_home_screen.dart';
-import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/service/auth_service.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -129,8 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          loginUser();
-                          getID();
+                          // loginUser();
+                          // getID();
+                          Navigator.pushNamed(context, 'dashboard');
                           print('ini Email ${emailPerusahaan.text}');
                           print('Ini Password ${passwordUser.text}');
                         },

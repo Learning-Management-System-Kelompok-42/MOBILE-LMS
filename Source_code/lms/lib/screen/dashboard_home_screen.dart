@@ -32,8 +32,7 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final a = Provider.of<UserViewModel>(context);
-    late UserModel userModel;
+    final model = Provider.of<UserViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 1),

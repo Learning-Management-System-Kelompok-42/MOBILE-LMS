@@ -9,7 +9,6 @@ class Auth {
     final dio = Dio();
     Response response = await dio.post('http://54.254.240.107:4001/v1/login',
         data: {'email': email, 'password': password});
-
     return response.data;
   }
 
@@ -19,6 +18,23 @@ class Auth {
     dio.options.headers["Authorization"] = "Bearer $token";
     Response response =
         await dio.get('http://54.254.240.107:4001/v1/users/$userid');
-    return UserModel.fromJson(response.data);
+
+    Map<String, dynamic> userData = (response.data['data'])
+        .map((e) => Data(
+              id: e['id'],
+              companyId: e['company_id'],
+              role: e['role'],
+              specializationId: e['specialization_id'],
+              fullName: e['full_name'],
+              email: e['email'],
+              password: e['password'],
+              phoneNumber: e['phone_number'],
+              address: e['address'],
+              levelAccess: e['level_access'],
+              createdAt: e['created_at'],
+              updatedAt: e['updated_at'],
+            ))
+        .toList();
+    return userData;
   }
 }
