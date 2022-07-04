@@ -16,8 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordUser = TextEditingController();
   String userToken = '';
 
-  String emaildummy = 'user1@tokped.id';
-  String passDummy = 'user123';
+  String emaildummy = 'admin@tokped.id';
+  String passDummy = 'admin123';
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          // loginUser();
-                          // getID();
-                          Navigator.pushNamed(context, 'dashboard');
+                          loginUser();
+                          getID();
+                          // Navigator.pushNamed(context, 'dashboard');
                           print('ini Email ${emailPerusahaan.text}');
                           print('Ini Password ${passwordUser.text}');
                         },
@@ -240,6 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         sharedPref.setString('token', logus['data']['token']);
         sharedPref.setString('userid', logus['data']['user_id']);
+        sharedPref.setString('compid', logus['data']['company_id']);
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -251,13 +252,14 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     print(sharedPref.get('token'));
     print(sharedPref.get('userid'));
+    print(sharedPref.get('compid'));
   }
 
   getID() async {
     await loginUser();
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    dynamic getid =
-        await Auth().getUser(sharedPref.get('token'), sharedPref.get('userid'));
+    dynamic getid = await Auth().getUser(sharedPref.get('token'),
+        sharedPref.get('compid'), sharedPref.get('userid'));
     print("ini adalah data get ID = $getid =");
     if (getid != null) {
       Navigator.pushNamed(context, 'dashboard');

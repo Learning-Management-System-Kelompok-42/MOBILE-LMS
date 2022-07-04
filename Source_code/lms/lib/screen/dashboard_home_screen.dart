@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lms/model/user_model.dart';
 import 'package:lms/screen/course_screen_management.dart';
@@ -33,6 +35,7 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<UserViewModel>(context);
+    UserModel user = UserModel();
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 1),
@@ -43,7 +46,7 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
               const SizedBox(height: 20),
               ListTile(
                 title: Text(
-                  'Halo, $nama !',
+                  'Halo, $nama!',
                   style: TextStyle(fontSize: 13, color: Colors.black),
                 ),
                 subtitle: Text(

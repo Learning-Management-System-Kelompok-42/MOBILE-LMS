@@ -101,7 +101,7 @@ class _RiwayatPermintaanState extends State<RiwayatPermintaan> {
       decoration: BoxDecoration(border: Border.all(color: Colors.black)),
       child: Column(
         children: [
-          Container(child: Row(child)),
+          Container(child: Row()),
         ],
       ),
     );
