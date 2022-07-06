@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lms/screen/akun_screen.dart';
 import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/course_screen_active.dart';
 import 'package:lms/screen/course_screen_past.dart';
 import 'package:lms/screen/dashboard_screen_management.dart';
+import 'package:lms/screen/detail_permintaan_screen.dart';
 import 'package:lms/screen/edit_profile_screen.dart';
 import 'package:lms/screen/ganti_password_akun_screen.dart';
 import 'package:lms/screen/kuis_screen.dart';
@@ -17,13 +21,19 @@ import 'package:lms/screen/video_screen.dart';
 import 'package:lms/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  ByteData data =
+      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => UserViewModel(),
-        )
+          create: (_) => UserDetailViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -32,7 +42,7 @@ void main() {
           'landing': (context) => LandingScreen(),
           'regis': (context) => const RegisScreen(),
           'login': (context) => const LoginScreen(),
-          'dashboard': (context) => const DashboardScreen(),
+          'dashboard': (context) => DashboardScreen(),
           'dashboard_active_screen': (context) =>
               const DashBoardCourseActiveScreen(),
           'dashboard_past_screen': (context) =>
@@ -46,6 +56,7 @@ void main() {
           'kuis_screen': (context) => KuisScreen(),
           'permintaan_screen': (context) => PermintaanScreen(),
           'riwayat_permintaan': (context) => RiwayatPermintaan(),
+          'detail_permintaan': (context) => DetailPermintaan(),
         },
       ),
     ),
