@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lms/screen/login_screen.dart';
+import 'package:lms/model/user_detail_model.dart';
+import 'package:lms/viewModel/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AkunScreen extends StatefulWidget {
   const AkunScreen({Key? key}) : super(key: key);
@@ -9,6 +11,12 @@ class AkunScreen extends StatefulWidget {
 }
 
 class _AkunScreenState extends State<AkunScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<UserDetailViewModel>(context, listen: false).getUserData();
+  }
+
   var name = 'Budi';
   var img = 'assets/images/contoh.png';
   var email = 'budi@company.id';
@@ -16,6 +24,8 @@ class _AkunScreenState extends State<AkunScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<UserDetailViewModel>(context);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -179,7 +189,7 @@ class _AkunScreenState extends State<AkunScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 69),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, 'login');

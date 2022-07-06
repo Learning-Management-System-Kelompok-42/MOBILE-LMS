@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms/screen/akun_screen.dart';
+import 'package:lms/screen/detail_permintaan_screen.dart';
 import 'package:lms/screen/edit_profile_screen.dart';
 import 'package:lms/screen/ganti_password_akun_screen.dart';
 import 'package:lms/screen/permintaan_screen.dart';
@@ -31,6 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body = PermintaanScreen();
           } else if (settings.name == 'riwayat_permintaan') {
             body = RiwayatPermintaan();
+          } else if (settings.name == 'detail_permintaan') {
+            body = DetailPermintaan();
           }
           return MaterialPageRoute(builder: (context) => body);
         },

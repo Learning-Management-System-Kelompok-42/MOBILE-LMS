@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lms/service/auth_service.dart';
+import 'package:lms/model/login_model.dart';
+import 'package:lms/model/user_list_model.dart';
+import 'package:lms/service/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String emaildummy = 'admin@tokped.id';
   String passDummy = 'admin123';
+
+  late Future<LoginModel> loginmodel;
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          loginUser();
-                          getID();
+                          auth();
+                          login();
+                          getAllUser();
+                          getUserDetail();
                           // Navigator.pushNamed(context, 'dashboard');
-                          print('ini Email ${emailPerusahaan.text}');
-                          print('Ini Password ${passwordUser.text}');
                         },
                         child: const Text('Masuk'),
                       ),
@@ -232,37 +236,51 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  loginUser() async {
-    dynamic logus = await Auth.login(emaildummy, passDummy);
+  auth() async {
+    dynamic auth = await ApiService.auth(emaildummy, passDummy);
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
 
-    if (logus['message'] == 'Success') {
+    if (auth['message'] == 'Success') {
       setState(() {
-        sharedPref.setString('token', logus['data']['token']);
-        sharedPref.setString('userid', logus['data']['user_id']);
-        sharedPref.setString('compid', logus['data']['company_id']);
+        sharedPref.setString('token', auth['data']['token']);
+        sharedPref.setString('userid', auth['data']['user_id']);
+        sharedPref.setString('compid', auth['data']['company_id']);
       });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error'),
-          backgroundColor: Colors.red,
-        ),
-      );
     }
-    print(sharedPref.get('token'));
-    print(sharedPref.get('userid'));
-    print(sharedPref.get('compid'));
   }
 
-  getID() async {
-    await loginUser();
+  login() async {
+    dynamic login = await ApiService().login(emaildummy, passDummy);
+  }
+
+  getAllUser() async {
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    dynamic getid = await Auth().getUser(sharedPref.get('token'),
-        sharedPref.get('compid'), sharedPref.get('userid'));
-    print("ini adalah data get ID = $getid =");
-    if (getid != null) {
+    dynamic getAllUser = await ApiService().getAllUser(
+      sharedPref.get('token'),
+      sharedPref.get('compid'),
+    );
+  }
+
+  getUserDetail() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    dynamic getUserDetail = await ApiService().getUserDetail(
+      sharedPref.get('token'),
+      LoginModel().data!.companyId,
+      LoginModel().data!.userId,
+    );
+    if (getUserDetail != null) {
       Navigator.pushNamed(context, 'dashboard');
     }
   }
+
+  // Widget coba() {
+  //   return FutureBuilder<LoginModel>(
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasData) {
+  //         return Text(snapshot.data!.data!.token!);
+  //       }
+  //       return coba();
+  //     },
+  //   );
+  // }
 }

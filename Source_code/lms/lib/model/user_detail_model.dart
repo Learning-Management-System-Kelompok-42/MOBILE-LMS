@@ -1,14 +1,16 @@
-class UserModel {
+import 'package:flutter/widgets.dart';
+
+class UserDetailModel {
   int? code;
   String? message;
   Data? data;
 
-  UserModel({this.code, this.message, this.data});
+  UserDetailModel({this.code, this.message, this.data});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  UserDetailModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] = Data.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {

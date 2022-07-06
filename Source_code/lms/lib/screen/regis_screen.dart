@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:checkbox_formfield/checkbox_formfield.dart';
 
 class RegisScreen extends StatefulWidget {
   const RegisScreen({Key? key}) : super(key: key);
@@ -9,7 +10,9 @@ class RegisScreen extends StatefulWidget {
 }
 
 TextEditingController _namaLengkap = TextEditingController();
-TextEditingController _emailPerusahaan = TextEditingController();
+TextEditingController _nohp = TextEditingController();
+TextEditingController _alamat = TextEditingController();
+TextEditingController _email = TextEditingController();
 TextEditingController _password = TextEditingController();
 TextEditingController _validatorpassword = TextEditingController();
 
@@ -18,7 +21,9 @@ class _RegisScreenState extends State<RegisScreen> {
   void dispose() {
     super.dispose();
     _namaLengkap.dispose();
-    _emailPerusahaan.dispose();
+    _nohp.dispose();
+    _alamat.dispose();
+    _email.dispose();
     _password.dispose();
     _validatorpassword.dispose();
   }
@@ -28,6 +33,7 @@ class _RegisScreenState extends State<RegisScreen> {
     bool isobscure = true;
     bool _notChecked = false;
     bool _checked = true;
+    void _onChanged(dynamic val) => debugPrint(val.toString());
 
     return Scaffold(
       body: ListView(
@@ -47,10 +53,78 @@ class _RegisScreenState extends State<RegisScreen> {
                     // ================================================================================================ //
                     //                FORM NAMA LENGKAP                                                                 //
                     // ================================================================================================ //
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Nama Lengkap'),
+                    ),
+                    const SizedBox(height: 5),
                     TextFormField(
                       controller: _namaLengkap,
                       decoration: const InputDecoration(
-                        labelText: 'Nama Lengkap',
+                        labelText: 'Masukan Nama Lengkap',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // ================================================================================================ //
+                    //                FORM NO HANDPHONE                                                                 //
+                    // ================================================================================================ //
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Nomor Handphone'),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      controller: _nohp,
+                      decoration: const InputDecoration(
+                        labelText: 'Masukan Nomor Handphone',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // ================================================================================================ //
+                    //                FORM ALAMAT                                                                       //
+                    // ================================================================================================ //
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Alamat Lengkap'),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      controller: _alamat,
+                      obscureText: isobscure,
+                      decoration: const InputDecoration(
+                        labelText: 'Masukan Alamat Lengkap',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                         enabledBorder: OutlineInputBorder(
@@ -73,10 +147,16 @@ class _RegisScreenState extends State<RegisScreen> {
                     // ================================================================================================ //
                     //                FORM EMAIL                                                                        //
                     // ================================================================================================ //
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Alamat Email'),
+                    ),
+                    const SizedBox(height: 5),
                     TextFormField(
-                      controller: _emailPerusahaan,
+                      controller: _email,
+                      obscureText: isobscure,
                       decoration: const InputDecoration(
-                        labelText: 'Alamat Email',
+                        labelText: 'Masukan Alamat Email',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                         enabledBorder: OutlineInputBorder(
@@ -96,40 +176,29 @@ class _RegisScreenState extends State<RegisScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '* Gunakan Email Perusahaan Kamu',
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
                     // ================================================================================================ //
                     //                FORM PASSWORD                                                                     //
                     // ================================================================================================ //
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Kata Sandi'),
+                    ),
+                    const SizedBox(height: 5),
                     TextFormField(
                       controller: _password,
                       obscureText: isobscure,
-                      decoration: InputDecoration(
-                        labelText: 'Kata Sandi',
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20),
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            setState(() {
-                              isobscure = false;
-                            });
-                          },
-                          child: Icon(Icons.visibility),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
+                      decoration: const InputDecoration(
+                        labelText: 'Masukan Kata Sandi',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
                           borderRadius: BorderRadius.all(
                             Radius.circular(10),
                           ),
                         ),
-                        focusedBorder: const OutlineInputBorder(
+                        focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
                           borderRadius: BorderRadius.all(
@@ -149,7 +218,6 @@ class _RegisScreenState extends State<RegisScreen> {
                         labelText: 'Ulangi Kata Sandi',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        suffixIcon: Icon(Icons.square),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
@@ -170,19 +238,25 @@ class _RegisScreenState extends State<RegisScreen> {
                     // ================================================================================================ //
                     //                BUTTON CHECK BOX                                                                  //
                     // ================================================================================================ //
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Checkbox(
-                          value: _notChecked,
-                          onChanged: (bool? _checked) {
-                            setState(() {
-                              _notChecked = _checked!;
-                            });
-                          }),
+                    Row(
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Checkbox(
+                              value: _notChecked,
+                              onChanged: _onChanged,
+                              checkColor: Colors.black,
+                            )),
+                        Container(
+                          width: 232,
+                          height: 40,
+                          child: const Text(
+                              'Saya setuju dengan syarat dan ketentuan yang berlaku'),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
                     ),
-                    const Text(
-                        'Saya setuju dengan syarat dan ketentuan yang berlaku'),
-                    const SizedBox(height: 10),
+
                     // ================================================================================================ //
                     //                BUTTON DAFTAR AKUN                                                                //
                     // ================================================================================================ //

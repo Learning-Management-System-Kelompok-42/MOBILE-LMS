@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:lms/model/user_model.dart';
+import 'package:lms/model/user_detail_model.dart';
 import 'package:lms/screen/course_screen_management.dart';
+import 'package:lms/screen/dashboard_screen_management.dart';
 import 'package:lms/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
@@ -22,7 +23,6 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<UserViewModel>(context, listen: false).getUserData();
     _searchController.addListener(() {
       setState(() {});
     });
@@ -34,9 +34,6 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<UserViewModel>(context);
-    UserModel user = UserModel();
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 1),
       child: ListView(
@@ -79,7 +76,7 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CourseScreen(),
+                            builder: (context) => DashboardScreen(),
                           ),
                         );
                       },
@@ -195,9 +192,7 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
               progressColor: Color.fromARGB(255, 255, 102, 36),
               center: Text('Progress 6%'),
               trailing: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'detail_course_screen');
-                },
+                onPressed: () {},
                 child: Text('Mulai'),
                 style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 255, 102, 36),

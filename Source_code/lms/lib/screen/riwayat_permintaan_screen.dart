@@ -78,12 +78,16 @@ class _RiwayatPermintaanState extends State<RiwayatPermintaan> {
             ),
             Container(
               width: double.infinity,
-              height: 300,
-              color: Colors.blue,
+              height: 400,
               child: ListView.builder(
                 itemCount: 1,
                 itemBuilder: (context, index) {
-                  return permintaanCard();
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'detail_permintaan');
+                    },
+                    child: permintaanCard(),
+                  );
                 },
               ),
             ),
@@ -97,11 +101,77 @@ class _RiwayatPermintaanState extends State<RiwayatPermintaan> {
     return Container(
       padding: EdgeInsets.all(10),
       width: double.infinity,
-      height: 100,
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      height: 130,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black54),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Column(
         children: [
-          Container(child: Row()),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Color.fromARGB(255, 125, 216, 213),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.check_box_outlined,
+                      size: 25, color: Color.fromRGBO(40, 111, 108, 1)),
+                  Text(
+                    'Sudah Selesai',
+                    style: TextStyle(color: Color.fromRGBO(40, 111, 108, 1)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Align(alignment: Alignment.topLeft, child: Text('Title Permintaan')),
+          Row(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'username',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              ),
+              const SizedBox(width: 5),
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(163, 163, 163, 1),
+                  borderRadius: BorderRadius.all(Radius.elliptical(6, 6)),
+                ),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                '6 jam yang lalu',
+                style: TextStyle(color: Colors.black54),
+              )
+            ],
+          ),
+          const SizedBox(height: 22),
+          Row(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Lihat detail',
+                  style: TextStyle(color: Color.fromRGBO(40, 111, 108, 1)),
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 20,
+                color: Color.fromRGBO(40, 111, 108, 1),
+              )
+            ],
+          )
         ],
       ),
     );

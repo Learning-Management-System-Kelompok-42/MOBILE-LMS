@@ -1,19 +1,19 @@
 import 'package:flutter/widgets.dart';
-import 'package:lms/model/user_model.dart';
-import 'package:lms/service/auth_service.dart';
+import 'package:lms/model/user_detail_model.dart';
+import 'package:lms/service/api_service.dart';
 
-class UserViewModel with ChangeNotifier {
-  List<UserModel> _userData = [];
-  List<UserModel> get userData => _userData;
+class UserDetailViewModel with ChangeNotifier {
+  List<UserDetailModel> _userData = [];
+  List<UserDetailModel> get userData => _userData;
 
   var _token;
   var _userid;
   var _compid;
 
   getUserData() async {
-    var a = Auth();
-    final f = await a.getUser(_token, _userid, _compid);
-    _userData = f;
+    var a = ApiService();
+    final f = await a.getUserDetail(_token, _userid, _compid);
+    _userData = f as List<UserDetailModel>;
     notifyListeners();
   }
 }
