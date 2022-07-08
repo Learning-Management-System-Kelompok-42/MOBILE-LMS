@@ -1,3 +1,5 @@
+import 'package:accordion/accordion.dart';
+import 'package:accordion/controllers.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -54,7 +56,7 @@ class _DetailCourseState extends State<DetailCourse> {
                 ),
                 Container(
                   width: double.infinity,
-                  height: 600,
+                  height: 733,
                   child: Column(
                     children: [
                       Container(
@@ -82,17 +84,11 @@ class _DetailCourseState extends State<DetailCourse> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 200,
+                        height: 400,
                         child: ListView.builder(
-                          padding: EdgeInsets.all(1),
-                          itemCount: 3,
+                          itemCount: 1,
                           itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, 'video_screen');
-                              },
-                              child: excerCard(),
-                            );
+                            return modulKursus();
                           },
                         ),
                       ),
@@ -188,30 +184,72 @@ class _DetailCourseState extends State<DetailCourse> {
             Container(
               width: double.infinity,
               height: 89,
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text('mentor: ',
-                          style: TextStyle(fontSize: 14, color: Colors.white)),
-                      Text('                       '),
-                      Text('progress: ',
-                          style: TextStyle(fontSize: 14, color: Colors.white)),
+                    children: [
+                      Text('Mentor :',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      Text('        '),
+                      CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/landing.png'),
+                      ),
                     ],
                   ),
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage(img),
-                    ),
-                    title: Text('Nama Mentor',
-                        style: TextStyle(fontSize: 13, color: Colors.white)),
-                    subtitle: Text('UI UX Designer',
-                        style: TextStyle(
-                            fontSize: 11,
-                            color: Color.fromARGB(255, 255, 102, 36))),
-                    trailing: Text('5%',
-                        style: TextStyle(fontSize: 13, color: Colors.white)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('     '),
+                      Text('     '),
+                      Text(name,
+                          style: TextStyle(color: Colors.white, fontSize: 15)),
+                      Text(role,
+                          style: TextStyle(color: Colors.white, fontSize: 13)),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text('Progress:',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      ProgressIndicatorTheme(
+                        child: Text(
+                          progress,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        data: ProgressIndicatorThemeData(),
+                      ),
+                      Container(
+                        width: 70,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromRGBO(242, 100, 64, 1),
+                        ),
+                        child: InkWell(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.lock,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              Text('Selesai',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13)),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -262,97 +300,100 @@ class _DetailCourseState extends State<DetailCourse> {
   }
 
   Widget modulKursus() {
-    final List<String> items = [
-      'video',
-      'Item2',
-      'Item3',
-      'Item4',
-    ];
-    List<String> selectedItems = [];
-    return Container(
-      child: Center(
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton2(
-            isExpanded: false,
-            hint: Align(
-              alignment: AlignmentDirectional.center,
-              child: Text(
-                'Select Items',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).hintColor,
+    return Accordion(
+      maxOpenSections: 1,
+      scaleWhenAnimating: true,
+      openAndCloseAnimation: true,
+      sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
+      sectionClosingHapticFeedback: SectionHapticFeedback.light,
+      children: [
+        AccordionSection(
+          headerBackgroundColor: Colors.white,
+          headerBackgroundColorOpened: Colors.white,
+          rightIcon: Icon(Icons.keyboard_arrow_down_sharp),
+          contentBorderColor: Colors.white,
+          isOpen: true,
+          leftIcon: const Icon(Icons.task, color: Colors.red),
+          header: Text('Pengenalan'),
+          content: Column(
+            children: [
+              Container(
+                color: Color.fromRGBO(179, 240, 221, 1),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'video_screen');
+                  },
+                  child: ListTile(
+                      leading: Icon(Icons.slow_motion_video),
+                      title: Text('Video Materi'),
+                      trailing: Icon(Icons.check_box)),
                 ),
               ),
-            ),
-            items: items.map((item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                //disable default onTap to avoid closing menu when selecting an item
-                enabled: false,
-                child: StatefulBuilder(
-                  builder: (context, menuSetState) {
-                    final _isSelected = selectedItems.contains(item);
-                    return InkWell(
-                      onTap: () {
-                        _isSelected
-                            ? selectedItems.remove(item)
-                            : selectedItems.add(item);
-                        //This rebuilds the StatefulWidget to update the button's text
-                        setState(() {});
-                        //This rebuilds the dropdownMenu Widget to update the check mark
-                        menuSetState(() {});
-                      },
-                      child: Container(
-                        height: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            _isSelected
-                                ? const Icon(Icons.check_box_outlined)
-                                : const Icon(Icons.check_box_outline_blank),
-                            const SizedBox(width: 16),
-                            Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+              Container(
+                color: Color.fromRGBO(179, 240, 221, 1),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'kuis_screen');
                   },
+                  child: ListTile(
+                      leading: Icon(Icons.task),
+                      title: Text('Kuis'),
+                      trailing: Icon(Icons.check_box)),
                 ),
-              );
-            }).toList(),
-            //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-            value: selectedItems.isEmpty ? null : selectedItems.last,
-            onChanged: (value) {},
-            buttonHeight: 40,
-            buttonWidth: 140,
-            itemHeight: 40,
-            itemPadding: EdgeInsets.zero,
-            selectedItemBuilder: (context) {
-              return items.map(
-                (item) {
-                  return Container(
-                    alignment: AlignmentDirectional.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      selectedItems.join(', '),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      maxLines: 1,
-                    ),
-                  );
-                },
-              ).toList();
-            },
+              ),
+              Container(
+                color: Color.fromRGBO(179, 240, 221, 1),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'slide_screen');
+                  },
+                  child: ListTile(
+                      leading: Icon(Icons.task),
+                      title: Text('PPT'),
+                      trailing: Icon(Icons.check_box)),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
+        AccordionSection(
+          headerBackgroundColor: Colors.white,
+          headerBackgroundColorOpened: Colors.white,
+          rightIcon: Icon(Icons.keyboard_arrow_down_sharp),
+          contentBorderColor: Colors.white,
+          isOpen: true,
+          leftIcon: const Icon(Icons.task, color: Colors.red),
+          header: Text('Pengenalan'),
+          content: Column(
+            children: [
+              Container(
+                color: Color.fromRGBO(179, 240, 221, 1),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'video_screen');
+                  },
+                  child: ListTile(
+                      leading: Icon(Icons.slow_motion_video),
+                      title: Text('Video Materi'),
+                      trailing: Icon(Icons.check_box)),
+                ),
+              ),
+              Container(
+                color: Color.fromRGBO(179, 240, 221, 1),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'kuis_screen');
+                  },
+                  child: ListTile(
+                      leading: Icon(Icons.task),
+                      title: Text('Kuis'),
+                      trailing: Icon(Icons.check_box)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

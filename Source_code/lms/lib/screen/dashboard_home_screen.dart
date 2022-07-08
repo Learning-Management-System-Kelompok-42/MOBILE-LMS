@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lms/model/user_detail_model.dart';
 import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/dashboard_screen_management.dart';
+import 'package:lms/viewModel/home_view_model.dart';
 import 'package:lms/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
@@ -73,12 +74,8 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DashboardScreen(),
-                          ),
-                        );
+                        Provider.of<HomeViewModel>(context, listen: false)
+                            .changeIndex(1);
                       },
                       child: courseCard(),
                     );
@@ -192,13 +189,16 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
               progressColor: Color.fromARGB(255, 255, 102, 36),
               center: Text('Progress 6%'),
               trailing: ElevatedButton(
-                onPressed: () {},
-                child: Text('Mulai'),
+                onPressed: () {
+                  Provider.of<HomeViewModel>(context, listen: false)
+                      .changeIndex(1);
+                },
+                child: Text('Lanjutkan'),
                 style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 255, 102, 36),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    fixedSize: Size(90, 30)),
+                        borderRadius: BorderRadius.circular(10)),
+                    fixedSize: Size(94, 30)),
               ),
             )
           ],

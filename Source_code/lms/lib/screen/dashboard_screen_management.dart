@@ -5,6 +5,8 @@ import 'package:lms/screen/dashboard_home_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
 import 'package:lms/screen/regis_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lms/viewModel/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
@@ -25,13 +27,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   ];
 
   void _selectItem(int index) {
-    setState(() {
-      curIndex = index;
-    });
+    // setState(() {
+    //   curIndex = index;
+    // });
+    Provider.of<HomeViewModel>(context, listen: false).changeIndex(index);
   }
 
   @override
   Widget build(BuildContext context) {
+    curIndex = Provider.of<HomeViewModel>(context).index;
     bool select = false;
     return Scaffold(
       body: widgetOption.elementAt(curIndex),

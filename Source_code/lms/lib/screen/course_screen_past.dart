@@ -20,8 +20,8 @@ class _DashBoardCourseScreenState extends State<DashBoardCoursePastScreen> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
+    _searchController.dispose();
   }
 
   @override

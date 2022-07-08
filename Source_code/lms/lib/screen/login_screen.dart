@@ -124,11 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          auth();
-                          login();
-                          getAllUser();
-                          getUserDetail();
-                          // Navigator.pushNamed(context, 'dashboard');
+                          // auth();
+                          // login();
+                          // getAllUser();
+                          // getUserDetail();
+                          Navigator.pushNamed(context, 'dashboard');
                         },
                         child: const Text('Masuk'),
                       ),

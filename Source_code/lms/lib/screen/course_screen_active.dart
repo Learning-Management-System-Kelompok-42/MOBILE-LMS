@@ -24,8 +24,8 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
+    _searchController.dispose();
   }
 
   @override
@@ -178,7 +178,7 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                 style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 255, 102, 36),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.circular(10)),
                     fixedSize: Size(90, 30)),
               ),
             )

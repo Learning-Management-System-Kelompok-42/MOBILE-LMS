@@ -17,7 +17,9 @@ import 'package:lms/screen/permintaan_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
 import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/screen/riwayat_permintaan_screen.dart';
+import 'package:lms/screen/slide_screen.dart';
 import 'package:lms/screen/video_screen.dart';
+import 'package:lms/viewModel/home_view_model.dart';
 import 'package:lms/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +35,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => UserDetailViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeViewModel(),
         ),
       ],
       child: MaterialApp(
@@ -57,6 +62,7 @@ void main() async {
           'permintaan_screen': (context) => PermintaanScreen(),
           'riwayat_permintaan': (context) => RiwayatPermintaan(),
           'detail_permintaan': (context) => DetailPermintaan(),
+          'slide_screen': (context) => SlideScreen(),
         },
       ),
     ),

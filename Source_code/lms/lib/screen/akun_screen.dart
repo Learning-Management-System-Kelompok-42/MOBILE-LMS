@@ -31,18 +31,11 @@ class _AkunScreenState extends State<AkunScreen> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             ListTile(
-              leading: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-              ),
               title: const Text(
                 'Akun Saya',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20),
               ),
             ),
             const SizedBox(height: 20),
@@ -196,7 +189,7 @@ class _AkunScreenState extends State<AkunScreen> {
               },
               child: const Text('Keluar'),
               style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 0, 92, 74),
+                  primary: Color.fromARGB(255, 255, 102, 36),
                   fixedSize: Size(130, 40)),
             ),
           ],
