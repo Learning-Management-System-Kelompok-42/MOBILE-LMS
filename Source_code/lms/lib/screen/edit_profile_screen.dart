@@ -130,7 +130,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Align(
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      content: Container(
+                        height: 327,
+                        width: 383,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/perubahan.png",
+                            ),
+                            const Text(
+                              "Perubahan telah disimpan !",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 child: const Text('Simpan Perubahan'),
                 style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 0, 92, 74),
