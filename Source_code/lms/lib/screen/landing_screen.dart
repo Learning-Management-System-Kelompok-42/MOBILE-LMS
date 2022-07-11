@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LandingScreen> createState() => _LandingScreenState();
+}
+
+class _LandingScreenState extends State<LandingScreen> {
+  bool _displayNewTextField = false;
+  bool _displayNewButton = false;
+  TextEditingController newTextFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class LandingScreen extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            height: 300,
+            height: 470,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(25),
@@ -36,10 +45,10 @@ class LandingScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 100,
                 ),
                 Container(
-                  width: 250,
+                  width: 350,
                   height: 110,
                   child: const Align(
                     alignment: Alignment.topCenter,
@@ -53,11 +62,11 @@ class LandingScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 Container(
-                  width: 250,
+                  width: 350,
                   height: 80,
                   child: const Align(
                     alignment: Alignment.topCenter,
@@ -71,14 +80,60 @@ class LandingScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: _displayNewTextField,
+                  child: Container(
+                    width: 350,
+                    child: TextFormField(
+                      controller: newTextFieldController,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        labelText: 'Masukkan link invitaion anda',
+                        hintText: 'Masukkan link invitaion anda',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     setState(() {
+                //       _displayNewTextField = true;
+                //     });
+                //   },
+                //   child: const Text("Submit"),
+                // ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    setState(() {
+                      _displayNewTextField = true;
+                    });
                     Navigator.pushNamed(context, 'regis');
                   },
+                  // onPressed: () {
+                  //   Navigator.pushNamed(context, 'regis');
+                  // },
                   child: const Text('Mulai'),
                   style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 0, 92, 74),
-                      fixedSize: Size(120, 40)),
+                      fixedSize: Size(350, 40)),
                 ),
               ],
             ),

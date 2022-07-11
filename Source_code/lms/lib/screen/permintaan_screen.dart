@@ -168,7 +168,33 @@ class _PermintaanScreenState extends State<PermintaanScreen> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        content: Container(
+                          height: 327,
+                          width: 383,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/perubahan.png",
+                              ),
+                              const Text(
+                                "Terima kasih !!. Permintaan anda telah terkirim",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 13),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                   child: const Text('Kirim'),
                   style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 0, 92, 74),
