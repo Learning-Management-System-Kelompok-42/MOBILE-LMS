@@ -5,7 +5,7 @@ import 'package:lms/model/user_detail_model.dart';
 import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/dashboard_screen_management.dart';
 import 'package:lms/viewModel/home_view_model.dart';
-import 'package:lms/viewModel/user_view_model.dart';
+import 'package:lms/viewModel/user_detail_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,27 +24,31 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<UserDetailViewModel>(context, listen: false).getUserData();
     _searchController.addListener(() {
       setState(() {});
     });
   }
 
-  var nama = 'Budi';
+  var nama = 'budi';
   var courseTitle = 'Course Title';
   var courseDesc = 'Course Description';
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 1),
-      child: ListView(
-        children: [
-          Column(
-            children: [
-              const SizedBox(height: 20),
-              ListTile(
+    final model = Provider.of<UserDetailViewModel>(context);
+
+    Widget listTile() {
+      return Container(
+        width: double.infinity,
+        height: 100,
+        child: ListView.builder(
+            itemCount: model.userData.length,
+            itemBuilder: ((context, index) {
+              final user = model.userData[index].data;
+              return ListTile(
                 title: Text(
-                  'Halo, $nama!',
+                  'Halo, ${user.fullName} !',
                   style: TextStyle(fontSize: 13, color: Colors.black),
                 ),
                 subtitle: Text(
@@ -58,7 +62,19 @@ class _DashBoardHomeScreenState extends State<DashBoardHomeScreen> {
                 trailing: CircleAvatar(
                   backgroundImage: AssetImage('assets/images/landing.png'),
                 ),
-              ),
+              );
+            })),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 1),
+      child: ListView(
+        children: [
+          Column(
+            children: [
+              const SizedBox(height: 20),
+              listTile(),
               Align(
                   alignment: Alignment.topLeft,
                   child: const Text(

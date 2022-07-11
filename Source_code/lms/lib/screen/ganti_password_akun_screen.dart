@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lms/service/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GantiPasswordScreen extends StatefulWidget {
   const GantiPasswordScreen({Key? key}) : super(key: key);
@@ -113,6 +115,29 @@ class _GantiPasswordScreenState extends State<GantiPasswordScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  validasi() {
+    if (passLamaControler.text == '' && passBaruControler.text == '') {
+      const snackBar = SnackBar(
+        content: Text('Masukkan Password Anda !!'),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      updateUser();
+    }
+  }
+
+  updateUser() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    dynamic update = await ApiService().changePasswordUser(
+      sharedPref.get('token'),
+      sharedPref.get('compid'),
+      sharedPref.get('userid'),
+      passLamaControler.text,
+      passBaruControler.text,
     );
   }
 }

@@ -1,118 +1,81 @@
-import 'package:flutter/widgets.dart';
-
 class UserDetailModel {
-  int? code;
-  String? message;
-  Data? data;
-
-  UserDetailModel({this.code, this.message, this.data});
+  UserDetailModel({
+    required this.code,
+    required this.message,
+    required this.data,
+  });
+  late final int code;
+  late final String message;
+  late final Data data;
 
   UserDetailModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = json['data'] = Data.fromJson(json['data']);
+    data = Data.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['code'] = code;
-    data['message'] = message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['code'] = code;
+    _data['message'] = message;
+    _data['data'] = data.toJson();
+    return _data;
   }
 }
 
 class Data {
+  Data({
+    this.id,
+    this.companyId,
+    this.specializationName,
+    this.specializationId,
+    this.fullName,
+    this.email,
+    this.phoneNumber,
+    this.address,
+    this.levelAccess,
+    this.createdAt,
+    this.updatedAt,
+  });
   String? id;
-  String? name;
+  String? companyId;
+  String? specializationName;
+  String? specializationId;
+  String? fullName;
   String? email;
   String? phoneNumber;
   String? address;
-  List<Course>? course;
+  String? levelAccess;
   String? createdAt;
   String? updatedAt;
 
-  Data(
-      {this.id,
-      this.name,
-      this.email,
-      this.phoneNumber,
-      this.address,
-      this.course,
-      this.createdAt,
-      this.updatedAt});
-
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    companyId = json['company_id'];
+    specializationName = json['specialization_name'];
+    specializationId = json['specialization_id'];
+    fullName = json['full_name'];
     email = json['email'];
     phoneNumber = json['phone_number'];
     address = json['address'];
-    if (json['course'] != null) {
-      course = <Course>[];
-      json['course'].forEach((v) {
-        course!.add(new Course.fromJson(v));
-      });
-    }
+    levelAccess = json['level_access'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone_number'] = this.phoneNumber;
-    data['address'] = this.address;
-    if (this.course != null) {
-      data['course'] = this.course!.map((v) => v.toJson()).toList();
-    }
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Course {
-  String? iD;
-  String? name;
-  String? thumbnail;
-  String? description;
-  int? rating;
-  String? createdAt;
-  String? updatedAt;
-
-  Course(
-      {this.iD,
-      this.name,
-      this.thumbnail,
-      this.description,
-      this.rating,
-      this.createdAt,
-      this.updatedAt});
-
-  Course.fromJson(Map<String, dynamic> json) {
-    iD = json['ID'];
-    name = json['Name'];
-    thumbnail = json['Thumbnail'];
-    description = json['Description'];
-    rating = json['Rating'];
-    createdAt = json['CreatedAt'];
-    updatedAt = json['UpdatedAt'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['Name'] = this.name;
-    data['Thumbnail'] = this.thumbnail;
-    data['Description'] = this.description;
-    data['Rating'] = this.rating;
-    data['CreatedAt'] = this.createdAt;
-    data['UpdatedAt'] = this.updatedAt;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['company_id'] = companyId;
+    _data['specialization_name'] = specializationName;
+    _data['specialization_id'] = specializationId;
+    _data['full_name'] = fullName;
+    _data['email'] = email;
+    _data['phone_number'] = phoneNumber;
+    _data['address'] = address;
+    _data['level_access'] = levelAccess;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    return _data;
   }
 }

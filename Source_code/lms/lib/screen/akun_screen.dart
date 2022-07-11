@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms/model/user_detail_model.dart';
-import 'package:lms/viewModel/user_view_model.dart';
+import 'package:lms/viewModel/user_detail_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AkunScreen extends StatefulWidget {
@@ -26,6 +26,69 @@ class _AkunScreenState extends State<AkunScreen> {
   Widget build(BuildContext context) {
     final model = Provider.of<UserDetailViewModel>(context);
 
+    Widget detailUser() {
+      return Container(
+        width: double.infinity,
+        height: 110,
+        child: ListView.builder(
+            itemCount: model.userData.length,
+            itemBuilder: ((context, index) {
+              final user = model.userData[index].data;
+              return Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox.fromSize(
+                      size: Size.fromRadius(40),
+                      child: Image.asset(img, fit: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    children: [
+                      Container(
+                        width: 120,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            user.fullName!,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 92, 74)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        width: 120,
+                        child: Text(
+                          user.specializationName!,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        width: 120,
+                        child: Text(
+                          user.email!,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            })),
+      );
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -38,58 +101,8 @@ class _AkunScreenState extends State<AkunScreen> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: SizedBox.fromSize(
-                    size: Size.fromRadius(40),
-                    child: Image.asset(img, fit: BoxFit.cover),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  children: [
-                    Container(
-                      width: 120,
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          name,
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 0, 92, 74)),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      width: 120,
-                      child: Text(
-                        role,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      width: 120,
-                      child: Text(
-                        email,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+            const SizedBox(height: 10),
+            detailUser(),
             const SizedBox(height: 20),
             InkWell(
               onTap: () {

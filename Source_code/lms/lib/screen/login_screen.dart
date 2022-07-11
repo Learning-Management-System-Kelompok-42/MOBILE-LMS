@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lms/model/login_model.dart';
+import 'package:lms/model/user_detail_model.dart';
 import 'package:lms/model/user_list_model.dart';
 import 'package:lms/service/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,8 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordUser = TextEditingController();
   String userToken = '';
 
-  String emaildummy = 'admin@tokped.id';
-  String passDummy = 'admin123';
+  String emaildummy = 'cobaUbah@gmail.com';
+  String passDummy = 'coba123';
 
   late Future<LoginModel> loginmodel;
 
@@ -124,11 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          // auth();
-                          // login();
-                          // getAllUser();
-                          // getUserDetail();
-                          Navigator.pushNamed(context, 'dashboard');
+                          login();
+                          getUserDetail();
                         },
                         child: const Text('Masuk'),
                       ),
@@ -169,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       Container(
-                        color: Color.fromARGB(255, 255, 102, 36),
+                        color: Color.fromRGBO(242, 100, 64, 1),
                         height: 50,
                         width: double.infinity,
                         child: Row(
@@ -236,38 +234,34 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  auth() async {
-    dynamic auth = await ApiService.auth(emaildummy, passDummy);
+  login() async {
+    dynamic login = await ApiService().login(emaildummy, passDummy);
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
-
-    if (auth['message'] == 'Success') {
-      setState(() {
-        sharedPref.setString('token', auth['data']['token']);
-        sharedPref.setString('userid', auth['data']['user_id']);
-        sharedPref.setString('compid', auth['data']['company_id']);
-      });
+    if (login['message'] == 'Success') {
+      setState(
+        () {
+          sharedPref.setString('token', login['data']['token']);
+          sharedPref.setString('userid', login['data']['user_id']);
+          sharedPref.setString('compid', login['data']['company_id']);
+        },
+      );
     }
   }
 
-  login() async {
-    dynamic login = await ApiService().login(emaildummy, passDummy);
-  }
-
-  getAllUser() async {
-    SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    dynamic getAllUser = await ApiService().getAllUser(
-      sharedPref.get('token'),
-      sharedPref.get('compid'),
-    );
-  }
+  // getAllUser() async {
+  //   SharedPreferences sharedPref = await SharedPreferences.getInstance();
+  //   dynamic getAllUser = await ApiService().getAllUser(
+  //     sharedPref.get('token'),
+  //     sharedPref.get('compid'),
+  //   );
+  // }
 
   getUserDetail() async {
+    await login();
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    dynamic getUserDetail = await ApiService().getUserDetail(
-      sharedPref.get('token'),
-      LoginModel().data!.companyId,
-      LoginModel().data!.userId,
-    );
+    dynamic getUserDetail = await ApiService()
+        .getUserById(sharedPref.get('token'), sharedPref.get('userid'));
+    print('ini adalah result dari method get user detail $getUserDetail');
     if (getUserDetail != null) {
       Navigator.pushNamed(context, 'dashboard');
     }
@@ -283,4 +277,5 @@ class _LoginScreenState extends State<LoginScreen> {
   //     },
   //   );
   // }
+
 }

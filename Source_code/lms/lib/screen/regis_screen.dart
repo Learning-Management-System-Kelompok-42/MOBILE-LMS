@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
+import 'package:lms/service/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisScreen extends StatefulWidget {
   const RegisScreen({Key? key}) : super(key: key);
@@ -265,7 +267,8 @@ class _RegisScreenState extends State<RegisScreen> {
                             primary: Color.fromARGB(255, 0, 92, 74),
                             fixedSize: Size(300, 40)),
                         onPressed: () {
-                          Navigator.pushNamed(context, 'login');
+                          findInvitation();
+                          checkIsi();
                         },
                         child: const Text('Daftar Akun')),
                     const SizedBox(height: 20),
@@ -365,5 +368,46 @@ class _RegisScreenState extends State<RegisScreen> {
         ],
       ),
     );
+  }
+
+  findInvitation() async {
+    var find = await ApiService().findInvitationLink();
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    if (find['message'] == 'Success') {
+      setState(() {
+        sharedPref.setString('specid', find['data']['id']);
+        sharedPref.setString('compid', find['data']['company_id']);
+      });
+    }
+    print(sharedPref.get('specid'));
+    print(sharedPref.get('compid'));
+  }
+
+  regis() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    var regis = await ApiService().registerUser(
+        sharedPref.get('compid'),
+        sharedPref.get('specid'),
+        _namaLengkap.text,
+        _email.text,
+        _password.text,
+        _nohp.text,
+        _alamat.text);
+  }
+
+  checkIsi() {
+    if (_namaLengkap.text == '' &&
+        _email.text == '' &&
+        _password.text == '' &&
+        _nohp.text == '' &&
+        _alamat.text == '') {
+      const snackBar = SnackBar(
+        content: Text('Isi form sesuai ketentuan yang benar'),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      regis();
+    }
   }
 }

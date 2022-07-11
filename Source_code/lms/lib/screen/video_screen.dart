@@ -32,30 +32,55 @@ class _VideoScreenState extends State<VideoScreen> {
     }
 
     bool _selesai = false;
-    Color color = Color.fromRGBO(40, 111, 108, 0.699999988079071);
+    Color color = Color.fromRGBO(87, 168, 158, 1);
+    Color _curcolor = Color.fromRGBO(40, 111, 108, 0.699999988079071);
     return Scaffold(
-      body: ListView(
-        children: [
-          playerWidget,
-          Expanded(
-            child: ElevatedButton(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            ListTile(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'detail_course_screen');
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+              ),
+              title: Text(
+                'Detail Course',
+                style: TextStyle(fontSize: 20),
+              ),
+              trailing: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/landing.png'),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 400,
+              child: playerWidget,
+            ),
+            ElevatedButton(
               onPressed: () {
                 setState(
                   () {
                     _selesai = true;
                     if (_selesai == true) {
-                      color = Color.fromRGBO(87, 168, 158, 1);
+                      _curcolor = color;
                     }
                   },
                 );
               },
               child: Text('Selesai'),
               style: ElevatedButton.styleFrom(
-                primary: color,
+                primary: _curcolor,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

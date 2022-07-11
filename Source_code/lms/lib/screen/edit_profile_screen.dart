@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:lms/service/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController namaAkun = TextEditingController();
   TextEditingController nomerHP = TextEditingController();
   TextEditingController alamat = TextEditingController();
+  TextEditingController email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 48),
             Align(
               alignment: Alignment.centerLeft,
               child: const Text(
@@ -52,6 +55,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               controller: namaAkun,
               decoration: const InputDecoration(
                 labelText: 'Masukkan Nama',
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 92, 74)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                'Email',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: email,
+              decoration: const InputDecoration(
+                labelText: 'Masukkan Email',
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 enabledBorder: OutlineInputBorder(
@@ -126,11 +158,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             Align(
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  validasi();
+                },
                 child: const Text('Simpan Perubahan'),
                 style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 0, 92, 74),
@@ -141,5 +175,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
+  }
+
+  validasi() {
+    if (namaAkun.text == '' &&
+        email.text == '' &&
+        nomerHP.text == '' &&
+        alamat.text == '') {
+      const snackBar = SnackBar(
+        content: Text('Maaf Ada Form Yang Belum Kamu Isi !!'),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      updateUser();
+    }
+  }
+
+  updateUser() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    dynamic update = await ApiService().updateProfileUser(
+        sharedPref.get('token'),
+        sharedPref.get('compid'),
+        sharedPref.get('userid'),
+        namaAkun.text,
+        email.text,
+        nomerHP.text,
+        alamat.text);
   }
 }
