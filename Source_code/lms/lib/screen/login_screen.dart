@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lms/model/login_model.dart';
-import 'package:lms/model/user_detail_model.dart';
-import 'package:lms/model/user_list_model.dart';
 import 'package:lms/service/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,11 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordUser = TextEditingController();
   String userToken = '';
 
-  String emaildummy = 'cobaUbah@gmail.com';
-  String passDummy = 'coba123';
-
-  late Future<LoginModel> loginmodel;
-
+  String emaildummy = 'user1Update@gmail.com';
+  String passDummy = 'user123';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           login();
                           getUserDetail();
+                          getCourse();
                         },
                         child: const Text('Masuk'),
                       ),
@@ -243,18 +238,11 @@ class _LoginScreenState extends State<LoginScreen> {
           sharedPref.setString('token', login['data']['token']);
           sharedPref.setString('userid', login['data']['user_id']);
           sharedPref.setString('compid', login['data']['company_id']);
+          sharedPref.setString('specid', login['data']['specialization_id']);
         },
       );
     }
   }
-
-  // getAllUser() async {
-  //   SharedPreferences sharedPref = await SharedPreferences.getInstance();
-  //   dynamic getAllUser = await ApiService().getAllUser(
-  //     sharedPref.get('token'),
-  //     sharedPref.get('compid'),
-  //   );
-  // }
 
   getUserDetail() async {
     await login();
@@ -267,15 +255,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // Widget coba() {
-  //   return FutureBuilder<LoginModel>(
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasData) {
-  //         return Text(snapshot.data!.data!.token!);
-  //       }
-  //       return coba();
-  //     },
-  //   );
-  // }
-
+  getCourse() async {
+    await login();
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    dynamic course = await ApiService().getAllCourse(sharedPref.get('token'),
+        sharedPref.get('userid'), sharedPref.get('specid'));
+    print('ini adalah result dari method get Course $course');
+  }
 }

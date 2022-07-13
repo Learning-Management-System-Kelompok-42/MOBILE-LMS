@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:group_radio_button/group_radio_button.dart';
+import 'package:lms/service/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PermintaanScreen extends StatefulWidget {
   const PermintaanScreen({Key? key}) : super(key: key);
@@ -9,7 +11,7 @@ class PermintaanScreen extends StatefulWidget {
 }
 
 class _PermintaanScreenState extends State<PermintaanScreen> {
-  String _verticalGroupValue = 'permintaan';
+  String _verticalGroupValue = '';
   List<String> _status = ['Permintaan Kursus', 'Permintaan Konsultasi'];
   TextEditingController _judulController = TextEditingController();
   TextEditingController _alasanController = TextEditingController();
@@ -168,7 +170,10 @@ class _PermintaanScreenState extends State<PermintaanScreen> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    validasi();
+                    reset();
+                  },
                   child: const Text('Kirim'),
                   style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 0, 92, 74),
@@ -180,5 +185,40 @@ class _PermintaanScreenState extends State<PermintaanScreen> {
         ),
       ),
     );
+  }
+
+  validasi() {
+    if (_verticalGroupValue.toString() == '' ||
+        _judulController.text == '' ||
+        _alasanController.text == '') {
+      const snackBar = SnackBar(
+        content: Text('Maaf Ada Form Yang Belum Kamu Isi !!'),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      request();
+    }
+  }
+
+  request() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    dynamic req = await ApiService().permintaan(
+        sharedPref.get('token'),
+        sharedPref.get('userid'),
+        sharedPref.get('compid'),
+        _verticalGroupValue.toString(),
+        _judulController.text,
+        _alasanController.text);
+    print(req);
+  }
+
+  reset() async {
+    await validasi();
+    setState(() {
+      _judulController.text = '';
+      _alasanController.text = '';
+      _verticalGroupValue = '';
+    });
   }
 }

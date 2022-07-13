@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
+import 'package:lms/model/course_detail_model.dart';
+import 'package:lms/model/course_model.dart';
 import 'package:lms/model/user_detail_model.dart';
-
-import 'package:lms/model/user_list_model.dart';
 
 class ApiService {
   Future<dynamic> login(String email, String password) async {
@@ -13,22 +11,6 @@ class ApiService {
 
     return response.data;
   }
-
-  // Future<UserListModel> getAllUser(var token, var compid) async {
-  //   Dio dio = Dio();
-  //   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-  //       (HttpClient client) {
-  //     client.badCertificateCallback =
-  //         (X509Certificate cert, String host, int port) => true;
-  //     return client;
-  //   };
-  //   dio.options.headers['Content-Type'] = 'application/json';
-  //   dio.options.headers["Authorization"] = "Bearer $token";
-  //   Response response = await dio
-  //       .get('https://54.254.240.107:4001/v1/company/$compid/employee');
-  //   print(response.data);
-  //   return UserListModel.fromJson(response.data);
-  // }
 
   Future<UserDetailModel> getUserById(var token, var userid) async {
     Dio dio = Dio();
@@ -99,6 +81,42 @@ class ApiService {
         'https://api.rubick.tech/v1/company/$compid/employee/$userid/password',
         data: {"old_password": oldPass, "new_password": newPass});
 
+    return response.data;
+  }
+
+  Future<dynamic> permintaan(var token, var userid, var compid, var reqType,
+      var title, var reason) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+    Response response = await dio
+        .post('https://api.rubick.tech/v1/employee/$userid/request', data: {
+      "company_id": compid,
+      "request_type": reqType,
+      "title": title,
+      "reason": reason
+    });
+    return response.data;
+  }
+
+  Future<dynamic> getAllCourse(var token, var userid, var specid) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+    Response response = await dio.get(
+      'https://api.rubick.tech/v1/employee/$userid/course/$specid',
+    );
+
+    return CourseModel.fromJson(response.data);
+  }
+
+  Future<dynamic> getDetailCourse(var token, var userid, var courseid) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+    Response response = await dio.get(
+      'https://api.rubick.tech/v1/employee/$userid/course/$courseid/details',
+    );
     return response.data;
   }
 }

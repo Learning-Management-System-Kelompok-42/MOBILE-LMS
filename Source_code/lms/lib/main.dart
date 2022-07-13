@@ -19,6 +19,8 @@ import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/screen/riwayat_permintaan_screen.dart';
 import 'package:lms/screen/slide_screen.dart';
 import 'package:lms/screen/video_screen.dart';
+import 'package:lms/viewModel/course_detail_view_model.dart';
+import 'package:lms/viewModel/course_view_model.dart';
 import 'package:lms/viewModel/home_view_model.dart';
 import 'package:lms/viewModel/user_detail_view_model.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +41,12 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => HomeViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CourseViewModel(),
+        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => CourseDetailViewModel(),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

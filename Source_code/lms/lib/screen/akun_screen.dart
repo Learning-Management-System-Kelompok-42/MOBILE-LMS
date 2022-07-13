@@ -29,8 +29,9 @@ class _AkunScreenState extends State<AkunScreen> {
     Widget detailUser() {
       return Container(
         width: double.infinity,
-        height: 110,
+        height: 90,
         child: ListView.builder(
+            padding: EdgeInsets.all(1),
             itemCount: model.userData.length,
             itemBuilder: ((context, index) {
               final user = model.userData[index].data;
@@ -47,7 +48,7 @@ class _AkunScreenState extends State<AkunScreen> {
                   Column(
                     children: [
                       Container(
-                        width: 120,
+                        width: 200,
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: Text(
@@ -61,7 +62,7 @@ class _AkunScreenState extends State<AkunScreen> {
                       ),
                       const SizedBox(height: 5),
                       Container(
-                        width: 120,
+                        width: 200,
                         child: Text(
                           user.specializationName!,
                           style: const TextStyle(
@@ -72,7 +73,7 @@ class _AkunScreenState extends State<AkunScreen> {
                       ),
                       const SizedBox(height: 5),
                       Container(
-                        width: 120,
+                        width: 200,
                         child: Text(
                           user.email!,
                           style: const TextStyle(

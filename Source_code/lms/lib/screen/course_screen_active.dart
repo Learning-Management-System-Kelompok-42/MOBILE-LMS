@@ -2,7 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lms/model/course_model.dart';
+import 'package:lms/screen/detail_course_screen.dart';
+import 'package:lms/service/api_service.dart';
+import 'package:lms/viewModel/course_view_model.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_search/textfield_search.dart';
 
 class DashBoardCourseActiveScreen extends StatefulWidget {
@@ -14,13 +20,19 @@ class DashBoardCourseActiveScreen extends StatefulWidget {
 }
 
 class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   var cari = 'Cari Kursus';
   List daftar = ['1', '2', '3', '4', '5', '6'];
 
   var courseTitle = 'Course Title';
   var courseDesc = 'Course Description';
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<CourseViewModel>(context, listen: false).getUserCourse();
+  }
 
   @override
   void dispose() {
@@ -30,6 +42,8 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final course = Provider.of<CourseViewModel>(context);
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -104,9 +118,126 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                   height: 390,
                   child: ListView.builder(
                     padding: EdgeInsets.all(1),
-                    itemCount: 2,
+                    itemCount: course.userCourse.length,
                     itemBuilder: (context, index) {
-                      return courseCard();
+                      var courseModel = course.userCourse[index].data;
+                      return Container(
+                        width: double.infinity,
+                        height: 390,
+                        child: ListView.builder(
+                            itemCount: courseModel.length,
+                            itemBuilder: ((context, index) {
+                              var mod = courseModel[index];
+                              return InkWell(
+                                onTap: () {
+                                  // print(mod.id);
+                                  // getCourseDetail() async {
+                                  //   SharedPreferences sharedPref =
+                                  //       await SharedPreferences.getInstance();
+                                  //   dynamic get = await ApiService()
+                                  //       .getDetailCourse(
+                                  //           sharedPref.get('token'),
+                                  //           sharedPref.get('userid'),
+                                  //           mod.id.toString());
+                                  //   print("ini adalah mod.id $get");
+                                  // }
+
+                                  // Navigator.pushNamed(
+                                  //     context, 'detail_course_screen');
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    width: double.infinity,
+                                    height: 250,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Color.fromARGB(255, 0, 92, 74),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          height: 90,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      mod.thumbnail),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                        const SizedBox(height: 7),
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            mod.title,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 7),
+                                        Container(
+                                          width: double.infinity,
+                                          height: 55,
+                                          child: Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              mod.description,
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                        LinearPercentIndicator(
+                                          width: 170,
+                                          lineHeight: 15,
+                                          backgroundColor: Colors.white,
+                                          percent: 0.1,
+                                          progressColor:
+                                              Color.fromARGB(255, 255, 102, 36),
+                                          center:
+                                              Text('Progress ${mod.progress}'),
+                                          trailing: ElevatedButton(
+                                            onPressed: () {
+                                              print(mod.id);
+                                              getCourseDetail() async {
+                                                SharedPreferences sharedPref =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                dynamic get = await ApiService()
+                                                    .getDetailCourse(
+                                                        sharedPref.get('token'),
+                                                        sharedPref
+                                                            .get('userid'),
+                                                        mod.id.toString());
+                                                return get['data'];
+                                              }
+
+                                              print(getCourseDetail());
+                                            },
+                                            child: Text('Mulai'),
+                                            style: ElevatedButton.styleFrom(
+                                                primary: Color.fromARGB(
+                                                    255, 255, 102, 36),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                fixedSize: Size(90, 30)),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            })),
+                      );
                     },
                   ),
                 ),

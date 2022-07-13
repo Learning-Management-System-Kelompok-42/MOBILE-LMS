@@ -2,8 +2,10 @@ import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:lms/viewModel/course_detail_view_model.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class DetailCourse extends StatefulWidget {
   const DetailCourse({Key? key}) : super(key: key);
@@ -16,18 +18,27 @@ class _DetailCourseState extends State<DetailCourse> {
   TextEditingController _ratingController = TextEditingController();
   var _userRating = 4.2;
 
-  var courseTitle = 'ini Judul course';
-  var courseDesc = 'ini deskripsi course';
-  var img = 'assets/images/landing.png';
-  var role = 'UI UX Designer';
-  var name = 'Nama Mentor';
-  var progress = '5%';
+  // var courseTitle = 'ini Judul course';
+  // var courseDesc = 'ini deskripsi course';
+  // var img = 'assets/images/landing.png';
+  // var role = 'UI UX Designer';
+  // var name = 'Nama Mentor';
+  // var progress = '5%';
   bool _isVertical = false;
 
   IconData? _selectedIcon;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Provider.of<CourseDetailViewModel>(context, listen: false)
+    // .getUserCourseDetail();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // final detailCourse = Provider.of<CourseDetailViewModel>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -64,9 +75,149 @@ class _DetailCourseState extends State<DetailCourse> {
                         height: 300,
                         child: ListView.builder(
                           padding: EdgeInsets.all(1),
-                          itemCount: 2,
+                          itemCount: 1,
                           itemBuilder: (context, index) {
-                            return courseCardDetail();
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                padding: EdgeInsets.all(20),
+                                width: double.infinity,
+                                height: 306,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color.fromARGB(255, 0, 92, 74),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                              image: NetworkImage(''),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    const SizedBox(height: 7),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        '',
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 7),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 70,
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          '',
+                                          maxLines: 20,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 89,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text('Mentor :',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text('        '),
+                                              CircleAvatar(
+                                                backgroundImage: AssetImage(
+                                                    'assets/images/landing.png'),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text('     '),
+                                              Text('     '),
+                                              Text('nama mentor masih hardcode',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15)),
+                                              Text('role juga hardcode',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 13)),
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              const Text('Progress:',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              ProgressIndicatorTheme(
+                                                child: Text(
+                                                  'hardcode',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                data:
+                                                    ProgressIndicatorThemeData(),
+                                              ),
+                                              Container(
+                                                width: 70,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Color.fromRGBO(
+                                                      242, 100, 64, 1),
+                                                ),
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.lock,
+                                                        size: 20,
+                                                        color: Colors.white,
+                                                      ),
+                                                      Text('Selesai',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 13)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -135,130 +286,130 @@ class _DetailCourseState extends State<DetailCourse> {
     );
   }
 
-  Widget courseCardDetail() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        padding: EdgeInsets.all(20),
-        width: double.infinity,
-        height: 306,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Color.fromARGB(255, 0, 92, 74),
-        ),
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 70,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/ret.png'),
-                      fit: BoxFit.cover)),
-            ),
-            const SizedBox(height: 7),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                courseTitle,
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 7),
-            Container(
-              width: double.infinity,
-              height: 70,
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  courseDesc,
-                  maxLines: 20,
-                  style: TextStyle(fontSize: 13, color: Colors.white),
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 89,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Mentor :',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                      Text('        '),
-                      CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/landing.png'),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('     '),
-                      Text('     '),
-                      Text(name,
-                          style: TextStyle(color: Colors.white, fontSize: 15)),
-                      Text(role,
-                          style: TextStyle(color: Colors.white, fontSize: 13)),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text('Progress:',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                      ProgressIndicatorTheme(
-                        child: Text(
-                          progress,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        data: ProgressIndicatorThemeData(),
-                      ),
-                      Container(
-                        width: 70,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(242, 100, 64, 1),
-                        ),
-                        child: InkWell(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Text('Selesai',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13)),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget courseCardDetail() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Container(
+  //       padding: EdgeInsets.all(20),
+  //       width: double.infinity,
+  //       height: 306,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         color: Color.fromARGB(255, 0, 92, 74),
+  //       ),
+  //       child: Column(
+  //         children: [
+  //           Container(
+  //             width: double.infinity,
+  //             height: 70,
+  //             decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(10),
+  //                 image: DecorationImage(
+  //                     image: AssetImage('assets/images/ret.png'),
+  //                     fit: BoxFit.cover)),
+  //           ),
+  //           const SizedBox(height: 7),
+  //           Align(
+  //             alignment: Alignment.topLeft,
+  //             child: Text(
+  //               courseTitle,
+  //               style: const TextStyle(
+  //                   fontSize: 20,
+  //                   fontWeight: FontWeight.bold,
+  //                   color: Colors.white),
+  //             ),
+  //           ),
+  //           const SizedBox(height: 7),
+  //           Container(
+  //             width: double.infinity,
+  //             height: 70,
+  //             child: Align(
+  //               alignment: Alignment.topLeft,
+  //               child: Text(
+  //                 courseDesc,
+  //                 maxLines: 20,
+  //                 style: TextStyle(fontSize: 13, color: Colors.white),
+  //               ),
+  //             ),
+  //           ),
+  //           Container(
+  //             width: double.infinity,
+  //             height: 89,
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 Column(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                   children: [
+  //                     Text('Mentor :',
+  //                         style: TextStyle(
+  //                             color: Colors.white,
+  //                             fontWeight: FontWeight.bold)),
+  //                     Text('        '),
+  //                     CircleAvatar(
+  //                       backgroundImage:
+  //                           AssetImage('assets/images/landing.png'),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 Column(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                   children: [
+  //                     Text('     '),
+  //                     Text('     '),
+  //                     Text(name,
+  //                         style: TextStyle(color: Colors.white, fontSize: 15)),
+  //                     Text(role,
+  //                         style: TextStyle(color: Colors.white, fontSize: 13)),
+  //                   ],
+  //                 ),
+  //                 Column(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                   children: [
+  //                     const Text('Progress:',
+  //                         style: TextStyle(
+  //                             color: Colors.white,
+  //                             fontWeight: FontWeight.bold)),
+  //                     ProgressIndicatorTheme(
+  //                       child: Text(
+  //                         progress,
+  //                         style: TextStyle(color: Colors.white),
+  //                       ),
+  //                       data: ProgressIndicatorThemeData(),
+  //                     ),
+  //                     Container(
+  //                       width: 70,
+  //                       height: 30,
+  //                       decoration: BoxDecoration(
+  //                         borderRadius: BorderRadius.circular(20),
+  //                         color: Color.fromRGBO(242, 100, 64, 1),
+  //                       ),
+  //                       child: InkWell(
+  //                         onTap: () {},
+  //                         child: Row(
+  //                           children: [
+  //                             Icon(
+  //                               Icons.lock,
+  //                               size: 20,
+  //                               color: Colors.white,
+  //                             ),
+  //                             Text('Selesai',
+  //                                 style: TextStyle(
+  //                                     color: Colors.white, fontSize: 13)),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     )
+  //                   ],
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget excerCard() {
     return Padding(
