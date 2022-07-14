@@ -50,8 +50,9 @@ class Data {
     description = json['description'];
     countModules = json['count_modules'];
     countEmployee = json['count_employee'];
-    modules =
-        List.from(json['modules']).map((e) => Modules.fromJson(e)).toList();
+    modules = List.from(json['modules'] ?? {})
+        .map((e) => Modules.fromJson(e))
+        .toList();
     ratingReviews = List.from(json['rating_reviews'])
         .map((e) => RatingReviews.fromJson(e))
         .toList();
@@ -115,7 +116,7 @@ class RatingReviews {
   late final String id;
   late final String name;
   late final String email;
-  late final double? rating;
+  late final dynamic rating;
   late final String reviews;
 
   RatingReviews.fromJson(Map<String, dynamic> json) {

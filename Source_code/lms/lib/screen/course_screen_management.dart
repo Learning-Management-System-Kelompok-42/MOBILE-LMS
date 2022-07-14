@@ -23,7 +23,7 @@ class _CourseScreenState extends State<CourseScreen> {
           if (settings.name == 'dashboard_past_screen') {
             body = DashBoardCoursePastScreen();
           } else if (settings.name == 'detail_course_screen') {
-            body = DetailCourse();
+            body = DetailCourse(id: '');
           } else if (settings.name == 'video_screen') {
             body = VideoScreen();
           } else if (settings.name == 'kuis_screen') {

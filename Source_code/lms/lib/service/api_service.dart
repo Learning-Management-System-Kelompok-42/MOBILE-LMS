@@ -112,11 +112,13 @@ class ApiService {
 
   Future<dynamic> getDetailCourse(var token, var userid, var courseid) async {
     Dio dio = Dio();
+
     dio.options.headers['Content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer $token";
     Response response = await dio.get(
       'https://api.rubick.tech/v1/employee/$userid/course/$courseid/details',
     );
-    return response.data;
+    print(response.data);
+    return CourseDetailModel.fromJson(response.data);
   }
 }

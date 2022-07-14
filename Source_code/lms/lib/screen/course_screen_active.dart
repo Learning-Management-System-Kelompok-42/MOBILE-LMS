@@ -1,11 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lms/model/course_detail_model.dart';
 import 'package:lms/model/course_model.dart';
+import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/detail_course_screen.dart';
 import 'package:lms/service/api_service.dart';
+import 'package:lms/viewModel/course_detail_view_model.dart';
 import 'package:lms/viewModel/course_view_model.dart';
+import 'package:lms/viewModel/user_detail_view_model.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,8 +33,9 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
 
   @override
   void initState() {
-    super.initState();
     Provider.of<CourseViewModel>(context, listen: false).getUserCourse();
+
+    super.initState();
   }
 
   @override
@@ -43,6 +47,7 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
   @override
   Widget build(BuildContext context) {
     final course = Provider.of<CourseViewModel>(context);
+    final detail = Provider.of<CourseDetailViewModel>(context);
 
     return Scaffold(
       body: Padding(
@@ -128,111 +133,85 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                             itemCount: courseModel.length,
                             itemBuilder: ((context, index) {
                               var mod = courseModel[index];
-                              return InkWell(
-                                onTap: () {
-                                  // print(mod.id);
-                                  // getCourseDetail() async {
-                                  //   SharedPreferences sharedPref =
-                                  //       await SharedPreferences.getInstance();
-                                  //   dynamic get = await ApiService()
-                                  //       .getDetailCourse(
-                                  //           sharedPref.get('token'),
-                                  //           sharedPref.get('userid'),
-                                  //           mod.id.toString());
-                                  //   print("ini adalah mod.id $get");
-                                  // }
-
-                                  // Navigator.pushNamed(
-                                  //     context, 'detail_course_screen');
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    width: double.infinity,
-                                    height: 250,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Color.fromARGB(255, 0, 92, 74),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: double.infinity,
-                                          height: 90,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      mod.thumbnail),
-                                                  fit: BoxFit.cover)),
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  width: double.infinity,
+                                  height: 250,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color.fromARGB(255, 0, 92, 74),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 90,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/images/ret.png'),
+                                                fit: BoxFit.cover)),
+                                      ),
+                                      const SizedBox(height: 7),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          mod.title,
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
                                         ),
-                                        const SizedBox(height: 7),
-                                        Align(
+                                      ),
+                                      const SizedBox(height: 7),
+                                      Container(
+                                        width: double.infinity,
+                                        height: 55,
+                                        child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            mod.title,
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
+                                            mod.description,
+                                            style: TextStyle(
+                                                fontSize: 13,
                                                 color: Colors.white),
                                           ),
                                         ),
-                                        const SizedBox(height: 7),
-                                        Container(
-                                          width: double.infinity,
-                                          height: 55,
-                                          child: Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              mod.description,
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.white),
-                                            ),
-                                          ),
+                                      ),
+                                      LinearPercentIndicator(
+                                        width: 170,
+                                        lineHeight: 15,
+                                        backgroundColor: Colors.white,
+                                        percent: 0.1,
+                                        progressColor:
+                                            Color.fromARGB(255, 255, 102, 36),
+                                        center:
+                                            Text('Progress ${mod.progress}'),
+                                        trailing: ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .push(PageRouteBuilder(
+                                              pageBuilder: (context, animation,
+                                                  secondaryAnimation) {
+                                                return DetailCourse(id: mod.id);
+                                              },
+                                            ));
+                                          },
+                                          child: Text('Mulai'),
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Color.fromARGB(
+                                                  255, 255, 102, 36),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              fixedSize: Size(90, 30)),
                                         ),
-                                        LinearPercentIndicator(
-                                          width: 170,
-                                          lineHeight: 15,
-                                          backgroundColor: Colors.white,
-                                          percent: 0.1,
-                                          progressColor:
-                                              Color.fromARGB(255, 255, 102, 36),
-                                          center:
-                                              Text('Progress ${mod.progress}'),
-                                          trailing: ElevatedButton(
-                                            onPressed: () {
-                                              print(mod.id);
-                                              getCourseDetail() async {
-                                                SharedPreferences sharedPref =
-                                                    await SharedPreferences
-                                                        .getInstance();
-                                                dynamic get = await ApiService()
-                                                    .getDetailCourse(
-                                                        sharedPref.get('token'),
-                                                        sharedPref
-                                                            .get('userid'),
-                                                        mod.id.toString());
-                                                return get['data'];
-                                              }
-
-                                              print(getCourseDetail());
-                                            },
-                                            child: Text('Mulai'),
-                                            style: ElevatedButton.styleFrom(
-                                                primary: Color.fromARGB(
-                                                    255, 255, 102, 36),
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                fixedSize: Size(90, 30)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               );

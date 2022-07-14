@@ -44,9 +44,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => CourseViewModel(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => CourseDetailViewModel(),
-        // ),
+        ChangeNotifierProvider(
+          create: (_) => CourseDetailViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

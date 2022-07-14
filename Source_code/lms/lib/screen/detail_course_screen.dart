@@ -8,8 +8,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class DetailCourse extends StatefulWidget {
-  const DetailCourse({Key? key}) : super(key: key);
+  DetailCourse({Key? key, required this.id}) : super(key: key);
 
+  var id;
   @override
   State<DetailCourse> createState() => _DetailCourseState();
 }
@@ -18,27 +19,27 @@ class _DetailCourseState extends State<DetailCourse> {
   TextEditingController _ratingController = TextEditingController();
   var _userRating = 4.2;
 
-  // var courseTitle = 'ini Judul course';
-  // var courseDesc = 'ini deskripsi course';
-  // var img = 'assets/images/landing.png';
-  // var role = 'UI UX Designer';
-  // var name = 'Nama Mentor';
-  // var progress = '5%';
+  var courseTitle = 'ini Judul course';
+  var courseDesc = 'ini deskripsi course';
+  var img = 'assets/images/landing.png';
+  var role = 'UI UX Designer';
+  var name = 'Nama Mentor';
+  var progress = '5%';
   bool _isVertical = false;
 
   IconData? _selectedIcon;
 
   @override
   void initState() {
-    // TODO: implement initState
+    Provider.of<CourseDetailViewModel>(context, listen: false)
+        .getUserCourseDetail(widget.id);
+    print(widget.id);
     super.initState();
-    // Provider.of<CourseDetailViewModel>(context, listen: false)
-    // .getUserCourseDetail();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final detailCourse = Provider.of<CourseDetailViewModel>(context);
+    final detailCourse = Provider.of<CourseDetailViewModel>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -65,6 +66,9 @@ class _DetailCourseState extends State<DetailCourse> {
                     backgroundImage: AssetImage('assets/images/landing.png'),
                   ),
                 ),
+                // ============================================================
+                // =                    Course Detail Card                    =
+                // ============================================================
                 Container(
                   width: double.infinity,
                   height: 733,
@@ -75,8 +79,10 @@ class _DetailCourseState extends State<DetailCourse> {
                         height: 300,
                         child: ListView.builder(
                           padding: EdgeInsets.all(1),
-                          itemCount: 1,
+                          itemCount: detailCourse.userCourseDetail.length,
                           itemBuilder: (context, index) {
+                            var detail =
+                                detailCourse.userCourseDetail[index].data;
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -96,14 +102,15 @@ class _DetailCourseState extends State<DetailCourse> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
-                                              image: NetworkImage(''),
+                                              image: AssetImage(
+                                                  'assets/images/ret.png'),
                                               fit: BoxFit.cover)),
                                     ),
                                     const SizedBox(height: 7),
                                     Align(
                                       alignment: Alignment.topLeft,
                                       child: Text(
-                                        '',
+                                        detail.title,
                                         style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -117,7 +124,7 @@ class _DetailCourseState extends State<DetailCourse> {
                                       child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          '',
+                                          detail.description,
                                           maxLines: 20,
                                           style: TextStyle(
                                               fontSize: 13,
@@ -132,84 +139,94 @@ class _DetailCourseState extends State<DetailCourse> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text('Mentor :',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text('        '),
-                                              CircleAvatar(
-                                                backgroundImage: AssetImage(
-                                                    'assets/images/landing.png'),
-                                              ),
-                                            ],
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text('     '),
-                                              Text('     '),
-                                              Text('nama mentor masih hardcode',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 15)),
-                                              Text('role juga hardcode',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 13)),
-                                            ],
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              const Text('Progress:',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              ProgressIndicatorTheme(
-                                                child: Text(
-                                                  'hardcode',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                data:
-                                                    ProgressIndicatorThemeData(),
-                                              ),
-                                              Container(
-                                                width: 70,
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  color: Color.fromRGBO(
-                                                      242, 100, 64, 1),
-                                                ),
-                                                child: InkWell(
-                                                  onTap: () {},
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.lock,
-                                                        size: 20,
+                                          Container(
+                                            width: 53,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text('Mentor :',
+                                                    style: TextStyle(
                                                         color: Colors.white,
-                                                      ),
-                                                      Text('Selesai',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 13)),
-                                                    ],
-                                                  ),
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text('        '),
+                                                CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/images/landing.png'),
                                                 ),
-                                              )
-                                            ],
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 110,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text('     '),
+                                                Text('     '),
+                                                Text(name,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 15)),
+                                                Text('role juga hardcode',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 13)),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                const Text('Progress:',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                ProgressIndicatorTheme(
+                                                  child: Text(
+                                                    'progress',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  data:
+                                                      ProgressIndicatorThemeData(),
+                                                ),
+                                                Container(
+                                                  width: 70,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    color: Color.fromRGBO(
+                                                        242, 100, 64, 1),
+                                                  ),
+                                                  child: InkWell(
+                                                    onTap: () {},
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.lock,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        ),
+                                                        Text('Selesai',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 13)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           )
                                         ],
                                       ),
@@ -221,6 +238,9 @@ class _DetailCourseState extends State<DetailCourse> {
                           },
                         ),
                       ),
+                      // ============================================================
+                      // =                    Modul Kursus                          =
+                      // ============================================================
                       const SizedBox(height: 10),
                       Container(
                         padding: EdgeInsets.only(left: 8, top: 2, bottom: 2),
