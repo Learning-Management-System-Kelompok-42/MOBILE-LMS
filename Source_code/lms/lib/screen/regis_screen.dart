@@ -267,7 +267,6 @@ class _RegisScreenState extends State<RegisScreen> {
                             primary: Color.fromARGB(255, 0, 92, 74),
                             fixedSize: Size(300, 40)),
                         onPressed: () {
-                          findInvitation();
                           checkIsi();
                         },
                         child: const Text('Daftar Akun')),
@@ -368,19 +367,6 @@ class _RegisScreenState extends State<RegisScreen> {
         ],
       ),
     );
-  }
-
-  findInvitation() async {
-    var find = await ApiService().findInvitationLink();
-    SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    if (find['message'] == 'Success') {
-      setState(() {
-        sharedPref.setString('specid', find['data']['id']);
-        sharedPref.setString('compid', find['data']['company_id']);
-      });
-    }
-    print(sharedPref.get('specid'));
-    print(sharedPref.get('compid'));
   }
 
   regis() async {

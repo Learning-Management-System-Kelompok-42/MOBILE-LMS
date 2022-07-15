@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lms/model/course_detail_model.dart';
 import 'package:lms/model/course_model.dart';
+import 'package:lms/model/modul_model.dart';
 import 'package:lms/model/user_detail_model.dart';
 
 class ApiService {
@@ -23,11 +25,10 @@ class ApiService {
     return UserDetailModel.fromJson(response.data);
   }
 
-  Future<dynamic> findInvitationLink() async {
+  Future<dynamic> findInvitationLink(var link) async {
     Dio dio = Dio();
-    Response response = await dio.get(
-        'https://api.rubick.tech/v1/invitation?link=1f567412cdc64309808c9950c58167b5');
-    print(response.data);
+    Response response = await dio.get('https://api.rubick.tech/v1/invitation',
+        queryParameters: {'link': link});
     return response.data;
   }
 
@@ -118,7 +119,17 @@ class ApiService {
     Response response = await dio.get(
       'https://api.rubick.tech/v1/employee/$userid/course/$courseid/details',
     );
-    print(response.data);
     return CourseDetailModel.fromJson(response.data);
+  }
+
+  Future<dynamic> getModulInCourse(var token, var userid, var courseid) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+    Response response = await dio.get(
+      'https://api.rubick.tech/v1/employee/$userid/course/$courseid/modules',
+    );
+    print(response.data);
+    return ModulModel.fromJson(response.data);
   }
 }

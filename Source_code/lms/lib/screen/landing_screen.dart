@@ -24,10 +24,10 @@ class LandingScreen extends StatelessWidget {
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               ),
-              color: Color.fromARGB(255, 255, 102, 36),
+              color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(255, 255, 102, 36).withOpacity(1),
+                  color: Colors.white,
                   blurRadius: 0,
                   spreadRadius: 10,
                 ),
@@ -40,14 +40,14 @@ class LandingScreen extends StatelessWidget {
                 ),
                 Container(
                   width: 250,
-                  height: 110,
+                  height: 50,
                   child: const Align(
                     alignment: Alignment.topCenter,
                     child: Text(
                       'Tingkatkan Kemampuanmu, Mari Belajar Bersama Kami!',
                       style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
+                          fontSize: 18,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -65,7 +65,7 @@ class LandingScreen extends StatelessWidget {
                       'Perluas pengetahuan dengan pembelajaran yang mencengkram dunia',
                       style: TextStyle(
                           fontSize: 15,
-                          color: Colors.white,
+                          color: Colors.grey,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -73,12 +73,25 @@ class LandingScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'regis');
+                    Navigator.pushNamed(context, 'link_screen');
                   },
-                  child: const Text('Mulai'),
+                  child: const Text('Daftar Sekarang'),
                   style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 0, 92, 74),
-                      fixedSize: Size(120, 40)),
+                      primary: Color.fromRGBO(242, 100, 64, 1),
+                      fixedSize: Size(250, 40)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'login');
+                  },
+                  child: const Text(
+                    'Masuk',
+                    style: TextStyle(color: Color.fromRGBO(242, 100, 64, 1)),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      side: BorderSide(color: Color.fromRGBO(242, 100, 64, 1)),
+                      primary: Colors.white,
+                      fixedSize: Size(250, 40)),
                 ),
               ],
             ),

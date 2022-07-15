@@ -3,7 +3,8 @@ import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
 class VideoScreen extends StatefulWidget {
-  const VideoScreen({Key? key}) : super(key: key);
+  VideoScreen({Key? key, required this.url}) : super(key: key);
+  var url;
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -12,24 +13,24 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
-    var videotitle = 'videotitle';
+    // VideoPlayerController videoPlayerController =
+    //     VideoPlayerController.network(widget.url);
+    // var videotitle = 'videotitle';
 
-    VideoPlayerController videoPlayerController = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+    // ChewieController chewieController = ChewieController(
+    //     videoPlayerController: videoPlayerController,
+    //     autoPlay: false,
+    //     looping: false);
 
-    ChewieController chewieController = ChewieController(
-        videoPlayerController: videoPlayerController,
-        autoPlay: false,
-        looping: false);
+    // final playerWidget = Chewie(controller: chewieController);
 
-    final playerWidget = Chewie(controller: chewieController);
+    // @override
+    // void dispose() {
+    //   videoPlayerController.dispose();
+    //   chewieController.dispose();
 
-    @override
-    void dispose() {
-      videoPlayerController.dispose();
-      chewieController.dispose();
-      super.dispose();
-    }
+    //   super.dispose();
+    // }
 
     bool _selesai = false;
     Color color = Color.fromRGBO(87, 168, 158, 1);
@@ -61,7 +62,7 @@ class _VideoScreenState extends State<VideoScreen> {
             Container(
               width: double.infinity,
               height: 400,
-              child: playerWidget,
+              child: Container(),
             ),
             ElevatedButton(
               onPressed: () {

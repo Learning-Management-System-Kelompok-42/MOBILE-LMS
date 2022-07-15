@@ -2,10 +2,13 @@ import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:lms/screen/video_screen.dart';
 import 'package:lms/viewModel/course_detail_view_model.dart';
+import 'package:lms/viewModel/modul_view_model.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:getwidget/getwidget.dart';
 
 class DetailCourse extends StatefulWidget {
   DetailCourse({Key? key, required this.id}) : super(key: key);
@@ -34,12 +37,15 @@ class _DetailCourseState extends State<DetailCourse> {
     Provider.of<CourseDetailViewModel>(context, listen: false)
         .getUserCourseDetail(widget.id);
     print(widget.id);
+    Provider.of<ModulViewModel>(context, listen: false).getUserModul(widget.id);
+    print(widget.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final detailCourse = Provider.of<CourseDetailViewModel>(context);
+    final modul = Provider.of<ModulViewModel>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -71,12 +77,12 @@ class _DetailCourseState extends State<DetailCourse> {
                 // ============================================================
                 Container(
                   width: double.infinity,
-                  height: 733,
+                  height: 925,
                   child: Column(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 300,
+                        height: 325,
                         child: ListView.builder(
                           padding: EdgeInsets.all(1),
                           itemCount: detailCourse.userCourseDetail.length,
@@ -256,11 +262,34 @@ class _DetailCourseState extends State<DetailCourse> {
                       Container(
                         width: double.infinity,
                         height: 400,
-                        child: ListView.builder(
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return modulKursus();
-                          },
+                        child: Container(
+                          width: double.infinity,
+                          height: 100,
+                          child: ListView.builder(
+                            padding: EdgeInsets.all(1),
+                            itemCount: modul.module.length,
+                            itemBuilder: (context, index) {
+                              var moduls = modul.module[index].data;
+                              return Container(
+                                width: double.infinity,
+                                height: 400,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.all(1),
+                                  itemCount: moduls.length,
+                                  itemBuilder: ((context, index) {
+                                    var mod = moduls[index];
+                                    return GFAccordion(
+                                      titleBorder: Border.all(
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255)),
+                                      title: mod.Title,
+                                      content: 'haloooo',
+                                    );
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

@@ -12,6 +12,7 @@ import 'package:lms/screen/edit_profile_screen.dart';
 import 'package:lms/screen/ganti_password_akun_screen.dart';
 import 'package:lms/screen/kuis_screen.dart';
 import 'package:lms/screen/landing_screen.dart';
+import 'package:lms/screen/link_screen.dart';
 import 'package:lms/screen/login_screen.dart';
 import 'package:lms/screen/permintaan_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
@@ -22,6 +23,7 @@ import 'package:lms/screen/video_screen.dart';
 import 'package:lms/viewModel/course_detail_view_model.dart';
 import 'package:lms/viewModel/course_view_model.dart';
 import 'package:lms/viewModel/home_view_model.dart';
+import 'package:lms/viewModel/modul_view_model.dart';
 import 'package:lms/viewModel/user_detail_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +49,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => CourseDetailViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ModulViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -65,12 +70,13 @@ void main() async {
           'akun_screen': (context) => AkunScreen(),
           'ganti_password_screen': (context) => GantiPasswordScreen(),
           'edit_profile_screen': (context) => EditProfileScreen(),
-          'video_screen': (context) => VideoScreen(),
+          'video_screen': (context) => VideoScreen(url: ''),
           'kuis_screen': (context) => KuisScreen(),
           'permintaan_screen': (context) => PermintaanScreen(),
           'riwayat_permintaan': (context) => RiwayatPermintaan(),
           'detail_permintaan': (context) => DetailPermintaan(),
           'slide_screen': (context) => SlideScreen(),
+          'link_screen': (context) => LinkScreen(),
         },
       ),
     ),

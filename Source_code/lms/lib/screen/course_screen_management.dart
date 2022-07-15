@@ -25,7 +25,9 @@ class _CourseScreenState extends State<CourseScreen> {
           } else if (settings.name == 'detail_course_screen') {
             body = DetailCourse(id: '');
           } else if (settings.name == 'video_screen') {
-            body = VideoScreen();
+            body = VideoScreen(
+              url: '',
+            );
           } else if (settings.name == 'kuis_screen') {
             body = KuisScreen();
           } else if (settings.name == 'slide_screen') {
