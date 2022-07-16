@@ -27,7 +27,7 @@ class _GantiPasswordScreenState extends State<GantiPasswordScreen> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     IconButton(
@@ -45,7 +45,7 @@ class _GantiPasswordScreenState extends State<GantiPasswordScreen> {
                     )
                   ],
                 ),
-                const SizedBox(height: 60),
+                const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: const Text(

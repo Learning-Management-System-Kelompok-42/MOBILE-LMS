@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lms/model/course_detail_model.dart';
-import 'package:lms/model/course_model.dart';
-import 'package:lms/screen/course_screen_management.dart';
 import 'package:lms/screen/detail_course_screen.dart';
-import 'package:lms/service/api_service.dart';
+
 import 'package:lms/viewModel/course_detail_view_model.dart';
 import 'package:lms/viewModel/course_view_model.dart';
-import 'package:lms/viewModel/user_detail_view_model.dart';
+
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:textfield_search/textfield_search.dart';
 
 class DashBoardCourseActiveScreen extends StatefulWidget {
   const DashBoardCourseActiveScreen({Key? key}) : super(key: key);
@@ -39,12 +33,6 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _searchController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final course = Provider.of<CourseViewModel>(context);
     final detail = Provider.of<CourseDetailViewModel>(context);
@@ -67,21 +55,6 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                Form(
-                  child: TextFieldSearch(
-                    label: cari,
-                    controller: _searchController,
-                    initialList: daftar,
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.search),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      hintText: 'Cari Kursus',
-                      contentPadding: EdgeInsets.only(left: 10),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -133,6 +106,11 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                             itemCount: courseModel.length,
                             itemBuilder: ((context, index) {
                               var mod = courseModel[index];
+                              rating() {
+                                var progress = mod.progress / 100;
+                                return progress;
+                              }
+
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -185,7 +163,7 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                                         width: 170,
                                         lineHeight: 15,
                                         backgroundColor: Colors.white,
-                                        percent: 0.1,
+                                        percent: rating(),
                                         progressColor:
                                             Color.fromARGB(255, 255, 102, 36),
                                         center:

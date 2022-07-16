@@ -95,7 +95,7 @@ class _AkunScreenState extends State<AkunScreen> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
             ListTile(
               title: const Text(
                 'Akun Saya',

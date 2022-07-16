@@ -75,7 +75,7 @@ void main() async {
           'permintaan_screen': (context) => PermintaanScreen(),
           'riwayat_permintaan': (context) => RiwayatPermintaan(),
           'detail_permintaan': (context) => DetailPermintaan(),
-          'slide_screen': (context) => SlideScreen(),
+          'slide_screen': (context) => SlideScreen(url: ''),
           'link_screen': (context) => LinkScreen(),
         },
       ),

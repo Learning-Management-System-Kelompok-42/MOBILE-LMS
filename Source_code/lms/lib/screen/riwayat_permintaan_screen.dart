@@ -18,7 +18,6 @@ class _RiwayatPermintaanState extends State<RiwayatPermintaan> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 10),
                 ListTile(
                   leading: IconButton(
                     onPressed: () {

@@ -26,7 +26,6 @@ class _PermintaanScreenState extends State<PermintaanScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 10),
                 ListTile(
                   leading: IconButton(
                     onPressed: () {

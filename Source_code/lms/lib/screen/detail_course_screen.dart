@@ -2,6 +2,8 @@ import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:lms/model/course_detail_model.dart';
+import 'package:lms/screen/slide_screen.dart';
 import 'package:lms/screen/video_screen.dart';
 import 'package:lms/viewModel/course_detail_view_model.dart';
 import 'package:lms/viewModel/modul_view_model.dart';
@@ -21,6 +23,8 @@ class DetailCourse extends StatefulWidget {
 class _DetailCourseState extends State<DetailCourse> {
   TextEditingController _ratingController = TextEditingController();
   var _userRating = 4.2;
+  late int _rating;
+  int initialRating = 2;
 
   var courseTitle = 'ini Judul course';
   var courseDesc = 'ini deskripsi course';
@@ -39,6 +43,7 @@ class _DetailCourseState extends State<DetailCourse> {
     print(widget.id);
     Provider.of<ModulViewModel>(context, listen: false).getUserModul(widget.id);
     print(widget.id);
+    _rating = initialRating;
     super.initState();
   }
 
@@ -77,7 +82,7 @@ class _DetailCourseState extends State<DetailCourse> {
                 // ============================================================
                 Container(
                   width: double.infinity,
-                  height: 925,
+                  height: 800,
                   child: Column(
                     children: [
                       Container(
@@ -282,8 +287,64 @@ class _DetailCourseState extends State<DetailCourse> {
                                       titleBorder: Border.all(
                                           color: Color.fromARGB(
                                               255, 255, 255, 255)),
-                                      title: mod.Title,
-                                      content: 'haloooo',
+                                      titleChild: Row(
+                                        children: [
+                                          Icon(Icons.assignment,
+                                              color: Color.fromRGBO(
+                                                  242, 100, 64, 1)),
+                                          const SizedBox(width: 10),
+                                          Text(mod.Title)
+                                        ],
+                                      ),
+                                      contentBackgroundColor:
+                                          Color.fromRGBO(216, 247, 235, 1),
+                                      contentChild: Column(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(PageRouteBuilder(
+                                                pageBuilder: (context,
+                                                    animation,
+                                                    secondaryAnimation) {
+                                                  return VideoScreen(
+                                                      url: mod.YoutubeURL);
+                                                },
+                                              ));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.play_circle),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text('Video Materi')
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(PageRouteBuilder(
+                                                pageBuilder: (context,
+                                                    animation,
+                                                    secondaryAnimation) {
+                                                  return SlideScreen(
+                                                      url: mod.SlideURL);
+                                                },
+                                              ));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.assignment_sharp),
+                                                const SizedBox(width: 10),
+                                                Text('Slide PPT')
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     );
                                   }),
                                 ),
@@ -295,38 +356,6 @@ class _DetailCourseState extends State<DetailCourse> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 70),
-                RatingBarIndicator(
-                  rating: _userRating,
-                  itemBuilder: (context, index) => Icon(
-                    _selectedIcon ?? Icons.star,
-                    color: Colors.amber,
-                  ),
-                  itemCount: 5,
-                  itemSize: 50.0,
-                  unratedColor: Colors.amber.withAlpha(50),
-                  direction: _isVertical ? Axis.vertical : Axis.horizontal,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TextFormField(
-                    controller: _ratingController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter rating',
-                      labelText: 'Enter rating',
-                      suffixIcon: MaterialButton(
-                        onPressed: () {
-                          _userRating = double.parse(_ratingController.text);
-                          setState(() {});
-                        },
-                        child: Text('Rate'),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20)
               ],
             ),
           ],

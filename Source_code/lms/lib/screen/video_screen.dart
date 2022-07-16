@@ -13,24 +13,24 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
-    // VideoPlayerController videoPlayerController =
-    //     VideoPlayerController.network(widget.url);
-    // var videotitle = 'videotitle';
+    VideoPlayerController videoPlayerController = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
+    var videotitle = 'videotitle';
 
-    // ChewieController chewieController = ChewieController(
-    //     videoPlayerController: videoPlayerController,
-    //     autoPlay: false,
-    //     looping: false);
+    ChewieController chewieController = ChewieController(
+        videoPlayerController: videoPlayerController,
+        autoPlay: false,
+        looping: false);
 
-    // final playerWidget = Chewie(controller: chewieController);
+    final playerWidget = Chewie(controller: chewieController);
 
-    // @override
-    // void dispose() {
-    //   videoPlayerController.dispose();
-    //   chewieController.dispose();
+    @override
+    void dispose() {
+      videoPlayerController.dispose();
+      chewieController.dispose();
 
-    //   super.dispose();
-    // }
+      super.dispose();
+    }
 
     bool _selesai = false;
     Color color = Color.fromRGBO(87, 168, 158, 1);
@@ -44,7 +44,7 @@ class _VideoScreenState extends State<VideoScreen> {
             ListTile(
               leading: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'detail_course_screen');
+                  Navigator.pop(context);
                 },
                 icon: Icon(
                   Icons.arrow_back,
@@ -59,11 +59,7 @@ class _VideoScreenState extends State<VideoScreen> {
                 backgroundImage: AssetImage('assets/images/landing.png'),
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 400,
-              child: Container(),
-            ),
+            Container(width: double.infinity, height: 400, child: playerWidget),
             ElevatedButton(
               onPressed: () {
                 setState(

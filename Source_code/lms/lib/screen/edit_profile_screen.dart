@@ -26,7 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     IconButton(
@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     )
                   ],
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: const Text(

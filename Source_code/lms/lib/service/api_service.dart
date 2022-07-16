@@ -132,4 +132,16 @@ class ApiService {
     print(response.data);
     return ModulModel.fromJson(response.data);
   }
+
+  Future<dynamic> ratingReview(
+      var token, var userid, var courseid, int rating, var review) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+    Response response = await dio.post(
+        'https://api.rubick.tech/v1/employee/$userid/course/$courseid/feedback',
+        data: {'rating': rating, 'reviews': review});
+    print(response.data);
+    return response.data;
+  }
 }

@@ -3,6 +3,7 @@ import 'package:lms/screen/course_screen_active.dart';
 import 'package:lms/screen/course_screen_past.dart';
 import 'package:lms/screen/detail_course_screen.dart';
 import 'package:lms/screen/kuis_screen.dart';
+import 'package:lms/screen/review_screen.dart';
 import 'package:lms/screen/slide_screen.dart';
 import 'package:lms/screen/video_screen.dart';
 
@@ -31,7 +32,9 @@ class _CourseScreenState extends State<CourseScreen> {
           } else if (settings.name == 'kuis_screen') {
             body = KuisScreen();
           } else if (settings.name == 'slide_screen') {
-            body = SlideScreen();
+            body = SlideScreen(url: '');
+          } else if (settings.name == 'review_screen') {
+            body = ReviewScreen(id: '');
           }
           return MaterialPageRoute(builder: (context) => body);
         },

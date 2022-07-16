@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class SlideScreen extends StatefulWidget {
-  const SlideScreen({Key? key}) : super(key: key);
+  var url;
+
+  SlideScreen({Key? key, required this.url}) : super(key: key);
 
   @override
   State<SlideScreen> createState() => _SlideScreenState();
 }
 
 class _SlideScreenState extends State<SlideScreen> {
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var _openResult = 'unknown';
-
-    Future<void> openFile() async {
-      var filePath = 'assets/images/ppt.pptx';
-    }
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -25,7 +30,7 @@ class _SlideScreenState extends State<SlideScreen> {
             ListTile(
               leading: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'detail_course_screen');
+                  Navigator.pop(context);
                 },
                 icon: Icon(
                   Icons.arrow_back,
@@ -40,6 +45,15 @@ class _SlideScreenState extends State<SlideScreen> {
                 backgroundImage: AssetImage('assets/images/landing.png'),
               ),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  _pdfViewerKey.currentState?.openBookmarkView();
+                },
+                child: Text('mulai')),
+            Container(
+                width: double.infinity,
+                height: 300,
+                child: SfPdfViewer.asset('assets/images/pdf2.pdf')),
           ],
         ),
       ),

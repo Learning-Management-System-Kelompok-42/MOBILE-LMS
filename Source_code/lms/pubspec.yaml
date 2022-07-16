@@ -53,6 +53,8 @@ dependencies:
   accordion: ^2.5.0
   video_player_web: ^2.0.10
   getwidget: ^3.0.1
+  syncfusion_flutter_pdfviewer: ^20.2.38-beta
+  
   
   
 

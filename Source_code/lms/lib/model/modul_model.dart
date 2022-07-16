@@ -11,7 +11,7 @@ class ModulModel {
   ModulModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = List.from(json['data']).map((e) => Data.fromJson(e)).toList();
+    data = List.from(json['data'] ?? {}).map((e) => Data.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
