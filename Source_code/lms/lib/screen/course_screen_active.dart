@@ -170,6 +170,8 @@ class _DashBoardCourseScreenState extends State<DashBoardCourseActiveScreen> {
                                             Text('Progress ${mod.progress}'),
                                         trailing: ElevatedButton(
                                           onPressed: () {
+                                            CourseViewModel()
+                                                .enRoll(courseModel[index].id);
                                             Navigator.of(context)
                                                 .push(PageRouteBuilder(
                                               pageBuilder: (context, animation,

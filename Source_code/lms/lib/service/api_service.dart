@@ -144,4 +144,14 @@ class ApiService {
     print(response.data);
     return response.data;
   }
+
+  Future<dynamic> enroll(var token, var userid, var courseid) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer $token";
+    Response response = await dio.post(
+        'https://api.rubick.tech/v1/employee/$userid/course/$courseid/enroll');
+    print(response.data);
+    return response.data;
+  }
 }

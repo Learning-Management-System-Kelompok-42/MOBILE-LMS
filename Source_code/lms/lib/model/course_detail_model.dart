@@ -116,7 +116,7 @@ class RatingReviews {
   late final String id;
   late final String name;
   late final String email;
-  late final int rating;
+  late final dynamic rating;
   late final String reviews;
 
   RatingReviews.fromJson(Map<String, dynamic> json) {

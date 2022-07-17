@@ -16,4 +16,10 @@ class CourseViewModel with ChangeNotifier {
     _userCourse = [f];
     notifyListeners();
   }
+
+  enRoll(var courseid) async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    var b = ApiService()
+        .enroll(sharedPref.get('token'), sharedPref.get('userid'), courseid);
+  }
 }

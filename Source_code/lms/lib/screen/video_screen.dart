@@ -81,21 +81,4 @@ class _VideoScreenState extends State<VideoScreen> {
       ),
     );
   }
-
-  // Widget button() {
-  //   return ElevatedButton(
-  //     onPressed: () {
-  //       setState(() {
-  //         _selesai = true;
-  //         if (_selesai == true) {
-  //           color = Color.fromRGBO(87, 168, 158, 1);
-  //         }
-  //       });
-  //     },
-  //     child: Text('Selesai'),
-  //     style: ElevatedButton.styleFrom(
-  //       primary: Color.fromRGBO(40, 111, 108, 0.699999988079071),
-  //     ),
-  //   );
-  // }
 }
