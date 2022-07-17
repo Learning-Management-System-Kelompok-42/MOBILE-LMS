@@ -18,6 +18,8 @@ import 'package:lms/screen/permintaan_screen.dart';
 import 'package:lms/screen/profile_screen_management.dart';
 import 'package:lms/screen/regis_screen.dart';
 import 'package:lms/screen/riwayat_permintaan_screen.dart';
+import 'package:lms/screen/sertifikat_download_screen.dart';
+import 'package:lms/screen/sertifikat_riwayat_screen.dart';
 import 'package:lms/screen/slide_screen.dart';
 import 'package:lms/screen/video_screen.dart';
 import 'package:lms/viewModel/course_detail_view_model.dart';
@@ -77,6 +79,8 @@ void main() async {
           'detail_permintaan': (context) => DetailPermintaan(),
           'slide_screen': (context) => SlideScreen(url: ''),
           'link_screen': (context) => LinkScreen(),
+          'sertifikat_download': (context) => SertifikatDownloadScreen(),
+          'sertifikat_riwayat': (context) => SertifikatRiwayatScreen(),
         },
       ),
     ),

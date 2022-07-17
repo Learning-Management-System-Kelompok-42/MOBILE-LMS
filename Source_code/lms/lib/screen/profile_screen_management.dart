@@ -5,6 +5,8 @@ import 'package:lms/screen/edit_profile_screen.dart';
 import 'package:lms/screen/ganti_password_akun_screen.dart';
 import 'package:lms/screen/permintaan_screen.dart';
 import 'package:lms/screen/riwayat_permintaan_screen.dart';
+import 'package:lms/screen/sertifikat_download_screen.dart';
+import 'package:lms/screen/sertifikat_riwayat_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -34,7 +36,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body = RiwayatPermintaan();
           } else if (settings.name == 'detail_permintaan') {
             body = DetailPermintaan();
+          } else if (settings.name == 'sertifikat_download') {
+            body = SertifikatDownloadScreen();
+          } else if (settings.name == 'sertifikat_riwayat') {
+            body = SertifikatRiwayatScreen();
           }
+
           return MaterialPageRoute(builder: (context) => body);
         },
       ),

@@ -153,7 +153,7 @@ class _AkunScreenState extends State<AkunScreen> {
             const SizedBox(height: 10),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '');
+                Navigator.pushNamed(context, 'sertifikat_download');
               },
               child: Container(
                 height: 55,

@@ -97,8 +97,10 @@ class _DashBoardCourseScreenState extends State<DashBoardCoursePastScreen> {
                           itemBuilder: (context, index) {
                             var cou = course.userCourse[index];
                             validasi() {
-                              if (cou.data[index].progress > 20) {
+                              if (cou.data[index].progress != 100) {
                                 var rating = cou.data[index].progress / 100;
+                                var change = cou.data[index++];
+                                index++;
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
