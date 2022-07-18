@@ -98,9 +98,10 @@ class _DashBoardCourseScreenState extends State<DashBoardCoursePastScreen> {
                             var cou = course.userCourse[index];
                             validasi() {
                               if (cou.data[index].progress != 100) {
-                                var rating = cou.data[index].progress / 100;
-                                var change = cou.data[index++];
                                 index++;
+                                index++;
+                                index++;
+                                var rating = cou.data[index].progress / 100;
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
@@ -153,7 +154,7 @@ class _DashBoardCourseScreenState extends State<DashBoardCoursePastScreen> {
                                           width: 170,
                                           lineHeight: 15,
                                           backgroundColor: Colors.white,
-                                          percent: 0.1,
+                                          percent: rating,
                                           progressColor:
                                               Color.fromARGB(255, 255, 102, 36),
                                           center: Text(

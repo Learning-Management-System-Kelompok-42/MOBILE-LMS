@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordUser = TextEditingController();
   String userToken = '';
 
-  String emaildummy = 'user1Update@gmail.com';
+  String emaildummy = 'user1Update1@gmail.com';
   String passDummy = 'user123';
   @override
   Widget build(BuildContext context) {
@@ -230,7 +230,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   login() async {
-    dynamic login = await ApiService().login(emaildummy, passDummy);
+    dynamic login =
+        await ApiService().login(emailPerusahaan.text, passwordUser.text);
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
     if (login['message'] == 'Success') {
       setState(

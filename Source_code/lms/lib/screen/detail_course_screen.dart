@@ -343,6 +343,20 @@ class _DetailCourseState extends State<DetailCourse> {
                                               ],
                                             ),
                                           ),
+                                          const SizedBox(height: 10),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                  context, 'kuis_screen');
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.assignment_sharp),
+                                                const SizedBox(width: 10),
+                                                Text('Kuis')
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );

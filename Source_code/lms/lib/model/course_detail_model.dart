@@ -53,7 +53,7 @@ class Data {
     modules = List.from(json['modules'] ?? {})
         .map((e) => Modules.fromJson(e))
         .toList();
-    ratingReviews = List.from(json['rating_reviews'])
+    ratingReviews = List.from(json['rating_reviews'] ?? {})
         .map((e) => RatingReviews.fromJson(e))
         .toList();
   }

@@ -24,7 +24,7 @@ class _KuisScreenState extends State<KuisScreen> {
             ListTile(
               leading: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'detail_course_screen');
+                  Navigator.pop(context);
                 },
                 icon: Icon(
                   Icons.arrow_back,
